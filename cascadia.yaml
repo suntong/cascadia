@@ -1,0 +1,27 @@
+# program name, name for the executable
+ProgramName: cascadia
+
+PackageName: main
+
+Name: cascadiaC
+Desc: cascadia wrapper
+Text: Command line interface to go cascadia CSS selectors package
+#NumArg: cli.AtLeast(1)
+NumOption: cli.AtLeast(3)
+
+Options:
+  - Name: Filei
+    Type: '*clix.Reader'
+    Flag: "*i,in"
+    Usage: 'The html/xml file to read from (or stdin)'
+
+  - Name: Fileo
+    Type: '*clix.Writer'
+    Flag: "*o,out"
+    Usage: 'The output file (or stdout)'
+
+  - Name: CSS
+    Type: string
+    Flag: '*c,css'
+    Usage: CSS selectors
+
