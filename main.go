@@ -20,7 +20,7 @@ import (
 // Global variables definitions
 
 var progname = "cascadia"
-var buildTime = "2016-12-10"
+var buildTime = "2016-12-12"
 
 var rootArgv *rootT
 
@@ -46,6 +46,7 @@ func cascadiaC(ctx *cli.Context) error {
 	return nil
 }
 
+// Cascadia filters the input buffer/stream `bi` with CSS selectors `css` and write to the output buffer/stream `bw`.
 func Cascadia(bi io.Reader, bw io.Writer, css string) error {
 	ss := css
 	c := cascadia.MustCompile(ss)

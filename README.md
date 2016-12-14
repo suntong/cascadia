@@ -1,5 +1,8 @@
 # cascadia
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/suntong/cascadia)](https://goreportcard.com/report/github.com/suntong/cascadia)
+[ ![Codeship Status](https://codeship.com/projects/7fbac590-a3dd-0134-4b89-26c19bdf8358/status?branch=master)](https://codeship.com/projects/190387)
+
 The [Go Cascadia package](https://github.com/andybalholm/cascadia) implements CSS selectors for html. This is a thin wrapper around that package, a command line tool, to test CSS selectors without writing Go code:
 
 ```
