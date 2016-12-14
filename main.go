@@ -8,6 +8,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"os"
 
 	"github.com/andybalholm/cascadia"
@@ -39,19 +40,25 @@ func cascadiaC(ctx *cli.Context) error {
 	// fmt.Println()
 
 	argv := ctx.Argv().(*rootT)
-	doc, err := html.Parse(argv.Filei)
+	Cascadia(argv.Filei, argv.Fileo, argv.CSS)
 	argv.Filei.Close()
+	argv.Fileo.Close()
+	return nil
+}
+
+func Cascadia(bi io.Reader, bw io.Writer, css string) error {
+	ss := css
+	c := cascadia.MustCompile(ss)
+
+	doc, err := html.Parse(bi)
 	abortOn("Input", err)
 
-	ss := argv.CSS
-	c := cascadia.MustCompile(ss)
 	ns := c.MatchAll(doc)
 	fmt.Fprintf(os.Stderr, "%d elements for '%s':\n", len(ns), ss)
 	for _, n := range ns {
-		html.Render(argv.Fileo, n)
-		fmt.Println()
+		html.Render(bw, n)
+		fmt.Fprintf(bw, "\n")
 	}
-	argv.Fileo.Close()
 	return nil
 }
 
