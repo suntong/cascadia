@@ -27,7 +27,7 @@ $ echo '<input type="radio" name="Sex" value="F" />' | tee /tmp/cascadia.xml | c
 0 elements for 'input[name=Sex][value=M]':
 ```
 
-Either the input or the output can be from a file as well:
+Either the input or the output can be followed with a file:
 
 
 ```sh
@@ -36,7 +36,7 @@ $ cascadia -i /tmp/cascadia.xml -o -c 'input[name=Sex][value=F]'
 <input type="radio" name="Sex" value="F"/>
 ```
 
-Of course, any number of selection allowed:
+Of course, any number of selections allowed:
 
 ```sh
 $ echo '<table border="0" cellpadding="0" cellspacing="0" style="table-layout: fixed; width: 100%; border: 0 dashed; border-color: #FFFFFF"><tr style="height:64px">aaa</tr></table>' | cascadia -i -o -c 'table[border="0"][cellpadding="0"][cellspacing="0"], tr[style=height\:64px]'
