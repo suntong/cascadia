@@ -22,12 +22,14 @@ Options:
 
 ## Examples
 
+All the three `-i -o -c` options are required. By default it reads from `stdin` and output to `stdout`:
+
 ```sh
 $ echo '<input type="radio" name="Sex" value="F" />' | tee /tmp/cascadia.xml | cascadia -i -o -c 'input[name=Sex][value=M]'
 0 elements for 'input[name=Sex][value=M]':
 ```
 
-Either the input or the output can be followed with a file:
+Either the input or the output can be followed by a file name:
 
 
 ```sh
