@@ -26,7 +26,7 @@ Options:
     Usage: CSS selectors
 
   - Name: Piece
-    Type: map[string]int
+    Type: CliMap
     Flag: 'p,piece'
     Usage: sub CSS selectors within -css to split that block up into pieces
 
