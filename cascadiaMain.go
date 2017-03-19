@@ -4,6 +4,8 @@
 // Authors: Tong Sun (c) 2016, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
+//go:generate sh -v cascadiaGenCLI.sh
+
 package main
 
 import (
