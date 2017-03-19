@@ -16,9 +16,10 @@ import (
 
 type rootT struct {
 	cli.Helper
-	Filei *clix.Reader `cli:"*i,in" usage:"The html/xml file to read from (or stdin)"`
-	Fileo *clix.Writer `cli:"*o,out" usage:"The output file (or stdout)"`
-	CSS   string       `cli:"*c,css" usage:"CSS selectors"`
+	Filei *clix.Reader   `cli:"*i,in" usage:"The html/xml file to read from (or stdin)"`
+	Fileo *clix.Writer   `cli:"*o,out" usage:"The output file (or stdout)"`
+	CSS   string         `cli:"*c,css" usage:"CSS selectors"`
+	Piece map[string]int `cli:"p,piece" usage:"sub CSS selectors within -css to split that block up into pieces"`
 }
 
 var root = &cli.Command{

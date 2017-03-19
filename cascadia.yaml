@@ -25,3 +25,8 @@ Options:
     Flag: '*c,css'
     Usage: CSS selectors
 
+  - Name: Piece
+    Type: map[string]int
+    Flag: 'p,piece'
+    Usage: sub CSS selectors within -css to split that block up into pieces
+
