@@ -26,7 +26,13 @@ Options:
     Usage: CSS selectors
 
   - Name: Piece
-    Type: CliMap
+    Type: MapStringString
     Flag: 'p,piece'
     Usage: sub CSS selectors within -css to split that block up into pieces
+
+  - Name: Deli
+    Type: string
+    Flag: d,delimiter
+    Usage: delimiter for pieces csv output
+    Value: "\\t"
 
