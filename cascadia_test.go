@@ -32,17 +32,9 @@ type selectorTest struct {
 
 var selectorTests = []selectorTest{
 	{
-		`<body><address>This address...</address></body>`,
-		"address",
-		[]string{
-			"<address>This address...</address>",
-		},
-	},
-	{
 		`<html><head></head><body></body></html>`,
 		"*",
 		[]string{
-			"<html><head></head><body></body></html>",
 			"<html><head></head><body></body></html>",
 			"<head></head>",
 			"<body></body>",
