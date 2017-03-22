@@ -23,7 +23,7 @@ Options:
   -d, --delimiter[=     ]   delimiter for pieces csv output
 ```
 
-Its output has two modes, _single selection mode_ and _block selection mode_, depending on whether the `--piece` parameter is given on the command line.
+Its output has two modes, _single selection mode_ and _block selection mode_, depending on whether the `--piece` parameter is given on the command line or not.
 
 - The single selection mode will output the selection as HTML source, while
 - The block selection mode will output HTML text in a tsv/csv table form
@@ -97,7 +97,7 @@ No      Title   Site
 30.     High-performance employees need quieter work spaces     qz.com
 ```
 
-It's poor man's scrapper tool if text are the only thing needed. For scrapping beyond text, then just go one step further, to use  [andrew-d/goscrape](https://github.com/andrew-d/goscrape) ( or my [goscrape](https://github.com/suntong/goscrape) instead, which has some enhancements to it).
+It's poor man's scrapper tool if text are the only thing needed. For scrapping beyond text, then just go one step further, to use  [andrew-d/goscrape](https://github.com/andrew-d/goscrape) (or my [goscrape](https://github.com/suntong/goscrape) instead, which has some enhancements to it).
 
 Again, if text are the only thing needed, then `cascadia` might be already enough. Here is how to scrap Hacker News _across several pages_:
 
