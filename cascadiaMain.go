@@ -4,7 +4,7 @@
 // Authors: Tong Sun (c) 2016-2017, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
-//go:generate sh -v cascadiaGenCLI.sh
+//go:generate sh -v cascadiaCLIGen.sh
 
 package main
 
