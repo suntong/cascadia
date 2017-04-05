@@ -1,1 +1,1 @@
- easygen -tf ../cli/cli-tx cascadia | gofmt > cascadiaDefs.go
+ easygen -tf ../cli/cli-tx cascadia | gofmt > cascadiaCLIDef.go
