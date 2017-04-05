@@ -9,7 +9,7 @@ The [Go Cascadia package](https://github.com/andybalholm/cascadia) implements CS
 ```
 $ cascadia
 cascadia wrapper
-built on 2017-03-22
+built on 2017-04-05
 
 Command line interface to go cascadia CSS selectors package
 
@@ -20,6 +20,8 @@ Options:
   -o, --out            *The output file (or stdout)
   -c, --css            *CSS selectors
   -p, --piece           sub CSS selectors within -css to split that block up into pieces
+                        format: PieceName=[RAW:]selector_string
+                        RAW: will return the selected as-is; else the text will be returned
   -d, --delimiter[=     ]   delimiter for pieces csv output
 ```
 
@@ -81,7 +83,15 @@ SelText
 Name: John Doe
 ```
 
-However, the real power of _block selection mode_ resides in its capability of producing tsv/csv tables without any go programming:
+Note that the block selection mode can output in HTML as well -- it just outputs (HTML) text by default:
+
+```sh
+$ cat /tmp/cascadia.xml | cascadia -i -o -c 'div' --piece SelText='RAW:p'
+SelText 
+<p align="justify"><b>Name: </b>John Doe</p>
+```
+
+The real power of _block selection mode_ resides in its capability of producing tsv/csv tables without any go programming:
 
 
 ```

@@ -23,16 +23,19 @@ import (
 ////////////////////////////////////////////////////////////////////////////
 // Constant and data type/structure definitions
 
+const IsRaw = "RAW:"
+
 type MapStringString struct {
 	Keys   []string
 	Values map[string]string
+	Raw    map[string]bool
 }
 
 ////////////////////////////////////////////////////////////////////////////
 // Global variables definitions
 
 var progname = "cascadia"
-var buildTime = "2017-03-22"
+var buildTime = "2017-04-05"
 
 var rootArgv *rootT
 
@@ -97,8 +100,13 @@ func Cascadia(bi io.Reader, bw io.Writer, css string, piece MapStringString, del
 			//fmt.Printf("] #%d: %s\n", index, item.Text())
 			for _, key := range piece.Keys {
 				//fmt.Printf("] %s\n", piece.Values[key])
-				fmt.Fprintf(bw, "%s%s",
-					item.Find(piece.Values[key]).Contents().Text(), deli)
+				if piece.Raw[key] {
+					html.Render(bw, item.Find(piece.Values[key]).Get(0))
+					fmt.Fprintf(bw, deli)
+				} else {
+					fmt.Fprintf(bw, "%s%s",
+						item.Find(piece.Values[key]).Contents().Text(), deli)
+				}
 			}
 			fmt.Fprintf(bw, "\n")
 		})
@@ -117,10 +125,15 @@ func (MapStringString) DecodeSlice() {}
 func (m *MapStringString) Decode(s string) error {
 	if (m.Values) == nil {
 		m.Values = make(map[string]string)
+		m.Raw = make(map[string]bool)
 	}
 	matches := regexp.MustCompile("(.*)=(.*)").FindStringSubmatch(s)
 	key := matches[1]
 	val := matches[2]
+	if len(val) >= 4 && val[:4] == IsRaw {
+		m.Raw[key] = true
+		val = val[4:]
+	}
 	m.Keys = append(m.Keys, key)
 	m.Values[key] = val
 	return nil

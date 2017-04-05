@@ -19,7 +19,7 @@ type rootT struct {
 	Filei *clix.Reader    `cli:"*i,in" usage:"The html/xml file to read from (or stdin)"`
 	Fileo *clix.Writer    `cli:"*o,out" usage:"The output file (or stdout)"`
 	CSS   string          `cli:"*c,css" usage:"CSS selectors"`
-	Piece MapStringString `cli:"p,piece" usage:"sub CSS selectors within -css to split that block up into pieces"`
+	Piece MapStringString `cli:"p,piece" usage:"sub CSS selectors within -css to split that block up into pieces\n\t\t\tformat: PieceName=[RAW:]selector_string\n\t\t\tRAW: will return the selected as-is; else the text will be returned"`
 	Deli  string          `cli:"d,delimiter" usage:"delimiter for pieces csv output" dft:"\t"`
 }
 
