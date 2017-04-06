@@ -156,4 +156,4 @@ Collecting as HTML is no trouble either. Here is another example:
 
      curl --silent http://www.shangxueedu.com/shuxue/ksdg/20170113_162_[1-6].html | cascadia -i -o -c div.m-post -p 'Book=RAW:div.post-con' --wrap-html | tee /tmp/book.html
 
-The [first page is here](http://www.shangxueedu.com/shuxue/ksdg/20170113_162_1.html), and [all pages are collected here](https://docs.google.com/document/d/1StFwP7kChHiGsL-hm3tnY29bsBRQWCU7xdhu2shsGcg/preview). Please check them out.
+The [fifth page is here](http://www.shangxueedu.com/shuxue/ksdg/20170113_162_5.html), and [all pages are collected here](https://docs.google.com/document/d/1StFwP7kChHiGsL-hm3tnY29bsBRQWCU7xdhu2shsGcg/preview). Please check them out.
