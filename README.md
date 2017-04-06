@@ -137,3 +137,23 @@ No      Title   Site
 ```
 
 By default it uses tab `\t` as fields delimiter, so the output is in `.tsv` format. To change to `.csv`, add `-d ,` to the command line.
+
+### Reconstruct the separated pages
+
+Many web sites annoyingly separated one file into several small pieces so that they can show it to you in different web pages, with different ads. However, I'd like to view them in one page and no ads. Or, at least that is what I'd been hoping for all the time, but I didn't have an easy way of doing it until now, with `cascadia`.
+
+
+With `cascadia` then no more programming is necessary. All we need to do now is to pass on some command line parameters, and the magic will happen. There are so many such sites that break thing into several small pieces, the following two are those I just did the other day.
+
+The first one is separated across over 23 pages! Twenty-three! I would just give up if I don't have `cascadia`, but with it, it is so simple:
+
+    curl --silent http://www.chinadmd.com/file/prrxtuivvxsxxwwaexuuwovp_[1-23].html | cascadia -i -o -c div.panel-body -p 'Book=div.tofu-txt' > /tmp/book.txt
+
+
+The [first page is here](http://www.chinadmd.com/file/prrxtuivvxsxxwwaexuuwovp_1.html), and [all 23-pages are collected here](https://docs.google.com/document/d/1HkJ2oxvRSvoaNXl0n3t-uGhT5Dd08cvDbP9tB9Dmy8Q/preview). I collect them as plain text because the HTML were just wrapping around the plain text, thus no need HTML, plain text is good enough.
+
+Collecting as HTML is no trouble either. Here is another example:
+
+     curl --silent http://www.shangxueedu.com/shuxue/ksdg/20170113_162_[1-6].html | cascadia -i -o -c div.m-post -p 'Book=RAW:div.post-con' --wrap-html | tee /tmp/book.html
+
+The [first page is here](http://www.shangxueedu.com/shuxue/ksdg/20170113_162_1.html), and [all pages are collected here](https://docs.google.com/document/d/1StFwP7kChHiGsL-hm3tnY29bsBRQWCU7xdhu2shsGcg/preview). Please check them out.
