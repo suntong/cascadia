@@ -23,7 +23,16 @@ import (
 ////////////////////////////////////////////////////////////////////////////
 // Constant and data type/structure definitions
 
-const IsRaw = "RAW:"
+const (
+	IsRaw       = "RAW:"
+	WrapHTMLBeg = `<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+  </head>
+<body>`
+	WrapHTMLEnd = `</body>`
+)
 
 type MapStringString struct {
 	Keys   []string
@@ -35,7 +44,7 @@ type MapStringString struct {
 // Global variables definitions
 
 var progname = "cascadia"
-var buildTime = "2017-04-05"
+var buildTime = "2017-04-06"
 
 var rootArgv *rootT
 
@@ -58,7 +67,7 @@ func cascadiaC(ctx *cli.Context) error {
 	// fmt.Println()
 
 	argv := ctx.Argv().(*rootT)
-	Cascadia(argv.Filei, argv.Fileo, argv.CSS, argv.Piece, argv.Deli)
+	Cascadia(argv.Filei, argv.Fileo, argv.CSS, argv.Piece, argv.Deli, argv.WrapHTML)
 	argv.Filei.Close()
 	argv.Fileo.Close()
 	return nil
@@ -67,7 +76,7 @@ func cascadiaC(ctx *cli.Context) error {
 //--------------------------------------------------------------------------
 
 // Cascadia filters the input buffer/stream `bi` with CSS selectors `css` and write to the output buffer/stream `bw`.
-func Cascadia(bi io.Reader, bw io.Writer, css string, piece MapStringString, deli string) error {
+func Cascadia(bi io.Reader, bw io.Writer, css string, piece MapStringString, deli string, wrapHTML bool) error {
 	if len(piece.Values) == 0 {
 		doc, err := html.Parse(bi)
 		abortOn("Input", err)
@@ -89,6 +98,9 @@ func Cascadia(bi io.Reader, bw io.Writer, css string, piece MapStringString, del
 		doc, err := goquery.NewDocumentFromReader(bi)
 		abortOn("Input", err)
 
+		if wrapHTML {
+			fmt.Fprintln(bw, WrapHTMLBeg)
+		}
 		// Print csv headers
 		for _, key := range piece.Keys {
 			fmt.Fprintf(bw, "%s%s", key, deli)
@@ -99,7 +111,7 @@ func Cascadia(bi io.Reader, bw io.Writer, css string, piece MapStringString, del
 		doc.Find(css).Each(func(index int, item *goquery.Selection) {
 			//fmt.Printf("] #%d: %s\n", index, item.Text())
 			for _, key := range piece.Keys {
-				//fmt.Printf("] %s\n", piece.Values[key])
+				//fmt.Printf("] %s: %s\n", key, piece.Values[key])
 				if piece.Raw[key] {
 					html.Render(bw, item.Find(piece.Values[key]).Get(0))
 					fmt.Fprintf(bw, deli)
@@ -110,6 +122,9 @@ func Cascadia(bi io.Reader, bw io.Writer, css string, piece MapStringString, del
 			}
 			fmt.Fprintf(bw, "\n")
 		})
+		if wrapHTML {
+			fmt.Fprintln(bw, WrapHTMLEnd)
+		}
 	}
 	return nil
 }

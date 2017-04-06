@@ -36,3 +36,7 @@ Options:
     Usage: delimiter for pieces csv output
     Value: "\\t"
 
+  - Name: WrapHTML
+    Type: bool
+    Flag: w,wrap-html
+    Usage: wrap up the output with html tags
