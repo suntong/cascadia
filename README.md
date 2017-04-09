@@ -9,7 +9,7 @@ The [Go Cascadia package](https://github.com/andybalholm/cascadia) implements CS
 ```
 $ cascadia
 cascadia wrapper
-built on 2017-04-05
+built on 2017-04-09
 
 Command line interface to go cascadia CSS selectors package
 
@@ -23,6 +23,8 @@ Options:
                         format: PieceName=[RAW:]selector_string
                         RAW: will return the selected as-is; else the text will be returned
   -d, --delimiter[=     ]   delimiter for pieces csv output
+  -w, --wrap-html       wrap up the output with html tags
+  -b, --base            base href tag used in the wrapped up html
 ```
 
 Its output has two modes, _single selection mode_ and _block selection mode_, depending on whether the `--piece` parameter is given on the command line or not.
