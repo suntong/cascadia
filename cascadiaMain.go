@@ -25,12 +25,6 @@ import (
 
 const (
 	IsRaw       = "RAW:"
-	WrapHTMLBeg = `<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-  </head>
-<body>`
 	WrapHTMLEnd = `</body>`
 )
 
@@ -47,6 +41,7 @@ var progname = "cascadia"
 var buildTime = "2017-04-06"
 
 var rootArgv *rootT
+var WrapHTMLBeg string
 
 ////////////////////////////////////////////////////////////////////////////
 // Function definitions
@@ -67,6 +62,14 @@ func cascadiaC(ctx *cli.Context) error {
 	// fmt.Println()
 
 	argv := ctx.Argv().(*rootT)
+	WrapHTMLBeg = fmt.Sprintf(`<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <base href="%s">
+  </head>
+<body>`, argv.Base)
+
 	Cascadia(argv.Filei, argv.Fileo, argv.CSS, argv.Piece, argv.Deli, argv.WrapHTML)
 	argv.Filei.Close()
 	argv.Fileo.Close()

@@ -40,3 +40,9 @@ Options:
     Type: bool
     Flag: w,wrap-html
     Usage: wrap up the output with html tags
+
+  - Name: Base
+    Type: string
+    Flag: b,base
+    Usage: base href tag used in the wrapped up html
+
