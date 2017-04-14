@@ -1,22 +1,43 @@
----
-SingleSel1: echo '<input type="radio" name="Sex" value="F" />' | tee /tmp/cascadia.xml | cascadia -i -o -c 'input[name=Sex][value=M]'
-SingleSel2: cascadia -i /tmp/cascadia.xml -o -c 'input[name=Sex][value=F]'
----
 
-# {{.Name}}
+# cascadia
 
-{{render "license/shields" . "License" "MIT"}}
-{{template "badge/godoc" .}}
-{{template "badge/goreport" .}}
-{{render "badge/codeship" . "CsUUID" "7fbac590-a3dd-0134-4b89-26c19bdf8358" "CsProjectID" "190387"}}
+[![MIT License](http://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![GoDoc](https://godoc.org/github.com/suntong/cascadia?status.svg)](http://godoc.org/github.com/suntong/cascadia)
+[![Go Report Card](https://goreportcard.com/badge/github.com/suntong/cascadia)](https://goreportcard.com/report/github.com/suntong/cascadia)
+[![codeship Status](https://codeship.com/projects/7fbac590-a3dd-0134-4b89-26c19bdf8358/status?branch=master)](https://codeship.com/projects/190387)
 
-## {{toc 5}}
+## TOC
+- [Usage](#usage)
+  - [$ cascadia](#-cascadia)
+- [Examples](#examples)
+  - [Single selection mode](#single-selection-mode)
+  - [Block selection mode](#block-selection-mode)
+  - [Reconstruct the separated pages](#reconstruct-the-separated-pages)
 
 The [Go Cascadia package](https://github.com/andybalholm/cascadia) implements CSS selectors for html. This is the command line tool, started as a thin wrapper around that package, but growing into a better tool to test CSS selectors without writing Go code:
 
 # Usage
 
-#### $ {{exec "cascadia" | color "sh"}}
+#### $ cascadia
+```sh
+cascadia wrapper
+built on 2017-04-09
+
+Command line interface to go cascadia CSS selectors package
+
+Options:
+
+  -h, --help            display help information
+  -i, --in             *The html/xml file to read from (or stdin)
+  -o, --out            *The output file (or stdout)
+  -c, --css            *CSS selectors
+  -p, --piece           sub CSS selectors within -css to split that block up into pieces
+			format: PieceName=[RAW:]selector_string
+			RAW: will return the selected as-is; else the text will be returned
+  -d, --delimiter[=	]   delimiter for pieces csv output
+  -w, --wrap-html       wrap up the output with html tags
+  -b, --base            base href tag used in the wrapped up html
+```
 
 Its output has two modes, _single selection mode_ and _block selection mode_, depending on whether the `--piece` parameter is given on the command line or not.
 
@@ -40,14 +61,17 @@ This all sounds rather complicated, but in practice it's quite simple. See the n
 All the three `-i -o -c` options are required. By default it reads from `stdin` and output to `stdout`:
 
 ```sh
-$ {{shell .SingleSel1}}
+$ echo '<input type="radio" name="Sex" value="F" />' | tee /tmp/cascadia.xml | cascadia -i -o -c 'input[name=Sex][value=M]'
+0 elements for 'input[name=Sex][value=M]':
 ```
 
 Either the input or the output can be followed by a file name:
 
 
 ```sh
-$ {{shell .SingleSel2}}
+$ cascadia -i /tmp/cascadia.xml -o -c 'input[name=Sex][value=F]'
+1 elements for 'input[name=Sex][value=F]':
+<input type="radio" name="Sex" value="F"/>
 ```
 
 Of course, any number of selections allowed:
