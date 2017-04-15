@@ -9,6 +9,7 @@ SingleSel2: cascadia -i /tmp/cascadia.xml -o -c 'input[name=Sex][value=F]'
 {{template "badge/godoc" .}}
 {{template "badge/goreport" .}}
 {{render "badge/codeship" . "CsUUID" "7fbac590-a3dd-0134-4b89-26c19bdf8358" "CsProjectID" "190387"}}
+{{template "badge/travis" .}}
 
 ## {{toc 5}}
 

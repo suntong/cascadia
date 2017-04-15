@@ -5,6 +5,7 @@
 [![GoDoc](https://godoc.org/github.com/suntong/cascadia?status.svg)](http://godoc.org/github.com/suntong/cascadia)
 [![Go Report Card](https://goreportcard.com/badge/github.com/suntong/cascadia)](https://goreportcard.com/report/github.com/suntong/cascadia)
 [![codeship Status](https://codeship.com/projects/7fbac590-a3dd-0134-4b89-26c19bdf8358/status?branch=master)](https://codeship.com/projects/190387)
+[![travis Status](https://travis-ci.org/suntong/cascadia.svg?branch=master)](https://travis-ci.org/suntong/cascadia)
 
 ## TOC
 - [Usage](#usage)
