@@ -4,22 +4,17 @@ env:
   global:
     - USER=suntong
     - MYAPP=cascadia
-    - MYMain=cascadiaMain.go
-    
 
 before_install:
   - sudo apt-get -qq update
   - mkdir -p ${GOPATH}/bin
   - go get -v ./...
-  - cd $GOPATH/src/github.com/$USER/$MYAPP
-  - go get -v ./...
+
+install:
+  - go install
 
 script:
   - go test -v ./...
-
-install:
-  - cd $GOPATH/src/github.com/$USER/$MYAPP
-  - go install
 
 before_deploy:
   - mkdir -p build/{386,amd64}
