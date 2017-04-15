@@ -1,0 +1,40 @@
+language: go
+
+env:
+  global:
+    - USER=suntong
+    - MYAPP=cascadia
+    - MYMain=cascadiaMain.go
+    
+
+before_install:
+  - sudo apt-get -qq update
+  - mkdir -p ${GOPATH}/bin
+  - go get -v ./...
+  - cd $GOPATH/src/github.com/$USER/$MYAPP
+  - go get -v ./...
+
+script:
+  - go test -v ./...
+
+install:
+  - cd $GOPATH/src/github.com/$USER/$MYAPP
+  - go install
+
+before_deploy:
+  - mkdir -p build/{386,amd64}
+  - GOOS=linux GOARCH=386 go build -o build/386/$MYAPP 
+  - GOOS=linux GOARCH=amd64 go build -o build/amd64/$MYAPP 
+#  - curl -L https://raw.githubusercontent.com/mh-cbon/go-bin-deb/master/create-pkg.sh | GH=$USER/$MYAPP sh -xe
+
+# deploy:
+#   provider: releases
+#   api_key:
+#     secure: xxxxxxx
+#   file_glob: true
+#   file:
+#     - $MYAPP-386.deb
+#     - $MYAPP-amd64.deb
+#   skip_cleanup: true
+#   on:
+#     tags: true
