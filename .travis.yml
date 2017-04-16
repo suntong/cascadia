@@ -36,4 +36,4 @@ deploy:
     tags: true
 
 after_deploy:
-  - curl -L https://raw.githubusercontent.com/mh-cbon/go-bin-deb/master/setup-repository.sh | GH=$USER/ppa EMAIL=suntong@users.noreply.github.com sh -xe
+  - curl -L https://raw.githubusercontent.com/mh-cbon/go-bin-deb/master/setup-repository.sh | GH=$USER/ppa EMAIL=suntong@users.noreply.github.com sh -xe
