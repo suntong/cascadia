@@ -2,8 +2,10 @@ language: go
 
 env:
   global:
-    - USER=suntong
     - MYAPP=cascadia
+    - USER_ID=suntong
+    - USER_REPO=ppa
+    - USER_EMAIL=suntong@cpan.org
     - secure: NetBtXidp4ZMVGnYnbZLKnH8ZmAffWiGdqXK70dfOJpodmr2amsM0vlomWV4oLDvhZ/jw88OB/17+S/ads1Cj9kf2epLU452cqc19tgqw1TThdrLxp/nCOcFM+cgm1V+dbi4Svrj3a+qUzmXuxjoevY6faQb/V9avx+Mlh9EvNfX9vFF2jcgiKlAjgj7xiDq/XIg1Ml2vO/WO40aOKHCdVXL6bi7zbiKZh/8V1x+8bSsOmsTUeIz0N5EJ/jvcxq2r92o8t+zbELvp+qVEVaHYjulCxfZizU+4QiagVzhEZT3iKJXK6c/SedvxAeM+iBTadFNetjVjpiVNiccWBtRE9R85bN/p+SbmFuZy1EZ5BL3iWh2iyVlgSB9r2Z8BX0rSPrI2v1wy3oYg6Hqhdde7rFVDDUNljLCg+YUF19SV40tYUkvgFpG3iqP1uZsxw3LRtr6DZ34aBn7gjnsk+4ET0+9yaToJquS7QLpHBJJqgoHHjNgPbbdbaETKp+zlhl3tWtWtkSNwIGtzyFgz1NfSyS9ryM+ymTjckWk/zP02mguSPcSBZDYQLydNCN56MlzadLBODVcAsfKAq8SGPdwzs4Ipexh0xLFdJ/iRZDUxWJ8UfuvKUDYy7GYYb83Cl0R54J+j5Qm1UAZ7UvNEnNyhgk6Vm0rfq3TFgonzHQcTOM=
 
 before_install:
@@ -21,7 +23,7 @@ before_deploy:
   - mkdir -p build/{386,amd64}
   - GOOS=linux GOARCH=386 go build -o build/386/$MYAPP 
   - GOOS=linux GOARCH=amd64 go build -o build/amd64/$MYAPP 
-  - curl -L https://raw.githubusercontent.com/mh-cbon/go-bin-deb/master/create-pkg.sh | GH=$USER/$MYAPP sh -xe
+  - curl -L https://raw.githubusercontent.com/mh-cbon/go-bin-deb/master/create-pkg.sh | GH=$USER_ID/$MYAPP sh -xe
 
 deploy:
   provider: releases
@@ -36,4 +38,4 @@ deploy:
     tags: true
 
 after_deploy:
-  - curl -L https://raw.githubusercontent.com/mh-cbon/go-bin-deb/master/setup-repository.sh | GH=$USER/ppa EMAIL=suntong@users.noreply.github.com sh -xe
+  - curl -L https://raw.githubusercontent.com/mh-cbon/go-bin-deb/master/setup-repository.sh | GH=$USER_ID/$USER_REPO EMAIL=$USER_EMAIL sh -xe
