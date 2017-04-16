@@ -1,0 +1,23 @@
+{
+  "name": "cascadia",
+  "maintainer": "suntong <suntong@users.noreply.github.com>",
+  "description": "Command line tool to test CSS selectors",
+  "changelog-cmd": "echo debian --vars='{\"name\":\"!name!\"}'",
+  "homepage": "http://github.com/suntong/!name!",
+  "files": [
+    {
+      "from": "build/!arch!/!name!",
+      "to": "/usr/bin",
+      "base" : "build/!arch!/",
+      "fperm": "0755"
+    }
+  ],
+  "copyrights": [
+    {
+      "files": "*",
+      "copyright": "2016-2017 suntong <suntong@users.noreply.github.com>",
+      "license": "MIT",
+      "file": "LICENSE"
+    }
+  ]
+}

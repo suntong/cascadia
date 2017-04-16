@@ -4,6 +4,7 @@ env:
   global:
     - USER=suntong
     - MYAPP=cascadia
+    - secure: NetBtXidp4ZMVGnYnbZLKnH8ZmAffWiGdqXK70dfOJpodmr2amsM0vlomWV4oLDvhZ/jw88OB/17+S/ads1Cj9kf2epLU452cqc19tgqw1TThdrLxp/nCOcFM+cgm1V+dbi4Svrj3a+qUzmXuxjoevY6faQb/V9avx+Mlh9EvNfX9vFF2jcgiKlAjgj7xiDq/XIg1Ml2vO/WO40aOKHCdVXL6bi7zbiKZh/8V1x+8bSsOmsTUeIz0N5EJ/jvcxq2r92o8t+zbELvp+qVEVaHYjulCxfZizU+4QiagVzhEZT3iKJXK6c/SedvxAeM+iBTadFNetjVjpiVNiccWBtRE9R85bN/p+SbmFuZy1EZ5BL3iWh2iyVlgSB9r2Z8BX0rSPrI2v1wy3oYg6Hqhdde7rFVDDUNljLCg+YUF19SV40tYUkvgFpG3iqP1uZsxw3LRtr6DZ34aBn7gjnsk+4ET0+9yaToJquS7QLpHBJJqgoHHjNgPbbdbaETKp+zlhl3tWtWtkSNwIGtzyFgz1NfSyS9ryM+ymTjckWk/zP02mguSPcSBZDYQLydNCN56MlzadLBODVcAsfKAq8SGPdwzs4Ipexh0xLFdJ/iRZDUxWJ8UfuvKUDYy7GYYb83Cl0R54J+j5Qm1UAZ7UvNEnNyhgk6Vm0rfq3TFgonzHQcTOM=
 
 before_install:
   - sudo apt-get -qq update
@@ -20,16 +21,19 @@ before_deploy:
   - mkdir -p build/{386,amd64}
   - GOOS=linux GOARCH=386 go build -o build/386/$MYAPP 
   - GOOS=linux GOARCH=amd64 go build -o build/amd64/$MYAPP 
-#  - curl -L https://raw.githubusercontent.com/mh-cbon/go-bin-deb/master/create-pkg.sh | GH=$USER/$MYAPP sh -xe
+  - curl -L https://raw.githubusercontent.com/mh-cbon/go-bin-deb/master/create-pkg.sh | GH=$USER/$MYAPP sh -xe
 
-# deploy:
-#   provider: releases
-#   api_key:
-#     secure: xxxxxxx
-#   file_glob: true
-#   file:
-#     - $MYAPP-386.deb
-#     - $MYAPP-amd64.deb
-#   skip_cleanup: true
-#   on:
-#     tags: true
+deploy:
+  provider: releases
+  api_key:
+    secure: aS/TlOom5O5opaMYXzFoTQN1PIXmt1xUPCCZFW+cEVno11uek7Mg0LHDrSzvwlF9+Uu3mRxkOsKxI6GJW5Nd49uscXFhY710h7uBzTfgZ6KVRQN8rhAjKsK0e8e7Wu2qng08qVZAS9FguUpaDyHeiq9V/umI5CEWuWH+qxxnY84tCM21F6r33yoWUejE0fDT/6r16OXlB9ElwVZOCf8bHN7Auc/FqO9jpYsEzaO9Gp2sv2g/6NPW/xNUO/rEis/BOTznPLFkkQmgDKhHpFaVUTJhMTNovfbsrkx33laLaIoJCbyOUC5emr0wMp4v64yYsRQHzpVUkMMQvPEnZy9SPyo9+QQrPxnC9MgjOpep8DSc5oG2ih85mRhfBLx5IvfHwJc/xTg2GQfoxogSDuSvPx+SP2mcr6qNRLxu4VWnUuwKup9PRw3uk8RLELp+wItz2DxAFbt+SnOxf1Oufrt4vRhGoEec9Rtd0YASHGAM63if7v422+ErxqfxELNdXE2zWtLaYMtAdxgEHijlbp80DmcIUIaUPp+mtAfHsRVNZFIxb8Y3rHmSri4kIzBMSqZ2FOY9HgMyehYNgckqjDwg8gGehGutErJRK7d0zPRKLNztqg8rbFGWcM0spSPYPDFRWxpbNyXMy7DxrcBh12bAC3+oZDtbjiJ4jcK118LpmzU
+  file_glob: true
+  file:
+    - $MYAPP-386.deb
+    - $MYAPP-amd64.deb
+  skip_cleanup: true
+  on:
+    tags: true
+
+after_deploy:
+  - curl -L https://raw.githubusercontent.com/mh-cbon/go-bin-deb/master/setup-repository.sh | GH=$USER/ppa EMAIL=suntong@users.noreply.github.com sh -xe
