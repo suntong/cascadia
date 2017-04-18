@@ -83,7 +83,8 @@ func Cascadia(bi io.Reader, bw io.Writer, css string, piece MapStringString, del
 	if len(piece.Values) == 0 {
 		doc, err := html.Parse(bi)
 		abortOn("Input", err)
-		c := cascadia.MustCompile(css)
+		c, err := cascadia.Compile(css)
+		abortOn("CSS Selector string "+css, err)
 
 		// https://godoc.org/github.com/andybalholm/cascadia
 		ns := c.MatchAll(doc)
