@@ -9,6 +9,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -150,6 +151,9 @@ func (m *MapStringString) Decode(s string) error {
 		m.Raw = make(map[string]bool)
 	}
 	matches := regexp.MustCompile("(.*)=(.*)").FindStringSubmatch(s)
+	if len(matches) < 2 {
+		return errors.New("format error. To get help, run: " + progname)
+	}
 	key := matches[1]
 	val := matches[2]
 	if len(val) >= 4 && val[:4] == IsRaw {
