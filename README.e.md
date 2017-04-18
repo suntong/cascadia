@@ -148,3 +148,13 @@ Collecting as HTML is no trouble either. Here is another example:
      curl --silent http://www.shangxueedu.com/shuxue/ksdg/20170113_162_[1-6].html | cascadia -i -o -c div.m-post -p 'Book=RAW:div.post-con' --wrap-html | tee /tmp/book.html
 
 The [fifth page is here](http://www.shangxueedu.com/shuxue/ksdg/20170113_162_5.html), and [all pages are collected here](https://docs.google.com/document/d/1StFwP7kChHiGsL-hm3tnY29bsBRQWCU7xdhu2shsGcg/preview). Please check them out.
+
+# More On CSS Selector
+
+I'm not an expert on CSS Selector at all, but the following resources are what I found most helpful to me.
+
+- [CSS Selectors Cheat Sheet](http://butlerccwebdev.net/support/css-selectors-cheatsheet.html) I think It's very good, because it's usage oriented and very practical, i.e., it arranges the Selectors according to their purposes. If that's too dry for you, check out
+- [The 30 CSS Selectors You Must Memorize](http://code.tutsplus.com/tutorials/the-30-css-selectors-you-must-memorize--net-16048) It only lists those selectors that are important, but it gives concrete examples and explanations
+- [CSS Selector Reference](http://www.w3schools.com/cssref/css_selectors.asp) from w3schools. This is the one I most often refer to, because the list is comprehensive, and there is also an online [CSS Selector Tester](http://www.w3schools.com/cssref/trysel.asp) that really helped me learn and understand
+
+

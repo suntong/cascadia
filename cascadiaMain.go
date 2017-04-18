@@ -38,7 +38,7 @@ type MapStringString struct {
 // Global variables definitions
 
 var progname = "cascadia"
-var buildTime = "2017-04-09"
+var buildTime = "2017-04-17"
 
 var rootArgv *rootT
 var WrapHTMLBeg string
