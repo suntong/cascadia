@@ -23,6 +23,7 @@ type rootT struct {
 	Deli     string          `cli:"d,delimiter" usage:"delimiter for pieces csv output" dft:"\t"`
 	WrapHTML bool            `cli:"w,wrap-html" usage:"wrap up the output with html tags"`
 	Base     string          `cli:"b,base" usage:"base href tag used in the wrapped up html"`
+	Quiet    bool            `cli:"q,quiet" usage:"be quiet"`
 }
 
 var root = &cli.Command{

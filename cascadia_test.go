@@ -9,7 +9,7 @@ import (
 func TestSelectors(t *testing.T) {
 	for _, test := range selectorTests {
 		buf := bytes.NewBufferString("")
-		Cascadia(strings.NewReader(test.HTML), buf, test.selector, MapStringString{}, ",", false)
+		Cascadia(strings.NewReader(test.HTML), buf, test.selector, MapStringString{}, ",", false, false)
 		got := buf.String()
 		if len(got) == 0 && len(test.results) == 0 {
 			// correct

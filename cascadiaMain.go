@@ -70,7 +70,8 @@ func cascadiaC(ctx *cli.Context) error {
   </head>
 <body>`, argv.Base)
 
-	Cascadia(argv.Filei, argv.Fileo, argv.CSS, argv.Piece, argv.Deli, argv.WrapHTML)
+	Cascadia(argv.Filei, argv.Fileo, argv.CSS, argv.Piece, argv.Deli,
+		argv.WrapHTML, argv.Quiet)
 	argv.Filei.Close()
 	argv.Fileo.Close()
 	return nil
@@ -79,7 +80,7 @@ func cascadiaC(ctx *cli.Context) error {
 //--------------------------------------------------------------------------
 
 // Cascadia filters the input buffer/stream `bi` with CSS selectors `css` and write to the output buffer/stream `bw`.
-func Cascadia(bi io.Reader, bw io.Writer, css string, piece MapStringString, deli string, wrapHTML bool) error {
+func Cascadia(bi io.Reader, bw io.Writer, css string, piece MapStringString, deli string, wrapHTML bool, beQuiet bool) error {
 	if len(piece.Values) == 0 {
 		doc, err := html.Parse(bi)
 		abortOn("Input", err)
@@ -88,7 +89,9 @@ func Cascadia(bi io.Reader, bw io.Writer, css string, piece MapStringString, del
 
 		// https://godoc.org/github.com/andybalholm/cascadia
 		ns := c.MatchAll(doc)
-		fmt.Fprintf(os.Stderr, "%d elements for '%s':\n", len(ns), css)
+		if !beQuiet {
+			fmt.Fprintf(os.Stderr, "%d elements for '%s':\n", len(ns), css)
+		}
 		for _, n := range ns {
 			html.Render(bw, n)
 			fmt.Fprintf(bw, "\n")

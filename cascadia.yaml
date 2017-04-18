@@ -46,3 +46,8 @@ Options:
     Flag: b,base
     Usage: base href tag used in the wrapped up html
 
+  - Name: Quiet
+    Type: bool
+    Flag: q,quiet
+    Usage: be quiet
+

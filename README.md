@@ -39,6 +39,7 @@ Options:
   -d, --delimiter[=	]   delimiter for pieces csv output
   -w, --wrap-html       wrap up the output with html tags
   -b, --base            base href tag used in the wrapped up html
+  -q, --quiet           be quiet
 ```
 
 Its output has two modes, _single selection mode_ and _block selection mode_, depending on whether the `--piece` parameter is given on the command line or not.
