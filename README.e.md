@@ -129,6 +129,35 @@ No      Title   Site
 
 By default it uses tab `\t` as fields delimiter, so the output is in `.tsv` format. To change to `.csv`, add `-d ,` to the command line.
 
+
+#### Twitter Search
+
+Block selection mode is poor man's web scrapping tool, and it is very simple to use. Here is another _practical_ example -- Twitter searching. We all know that you have to [pay for the Twitter Search API and it _only serves Tweets from the past week_](https://dev.twitter.com/rest/public/search). With `cascadia`, you can search the tweets for free, and get the latest content as well.
+
+Here is how I watch for Toronto/GTA's Gas Price Alert, _without getting all other tweets_ from him:
+
+```sh
+$ cascadia -i 'https://twitter.com/search?q=%22Gas%20Price%20Alert%22%20%23GTA%20from%3AGasBuddyDan&src=typd' -o -c 'div.stream div.original-tweet div.content' --piece Time='small.time' --piece Tweet='div.js-tweet-text-container > p'
+Time    Tweet
+
+  Jul 31
+        Gas Price Alert #Toronto #GTA #Hamilton #Ottawa #LdnOnt #Barrie #Kitchener #Niagara #Windsor N/C Tues and to a 2ct/l HIKE gor Wednesday
+
+  Jul 6
+        Gas Price Alert #Toronto #GTA #LdnOnt #Hamilton #Ottawa #Barrie #KW to see a 1 ct/l drop @ for Friday July 7
+
+  May 30
+        Gas Price Alert #Toronto #GTA #Ottawa #LdnOnt #Hamilton #KW #Barrie #Windsor prices won't change Wednesday but will DROP 1 ct/l Thursday
+
+  May 15
+        Gas Price Alert #Toronto #GTA #Barrie #Hamilton #LdnOnt #Ottawa #KW #Windsor NO CHANGE @  except gas bar shenanigans for Tues & Wednesday
+
+  Mar 7
+        Gas Price Alert #Toronto #GTHA #LdnOnt #Ottawa #Barrie #KW #Windsor to see a 1 cent a litre HIKE Wed March 8 (to 107.9 in the #GTA)
+
+```
+
+
 ### Reconstruct the separated pages
 
 Many web sites annoyingly separated one file into several small pieces so that they can show it to you in different web pages, with different ads. However, I'd like to view them in one page and no ads. Or, at least that is what I'd been hoping for all the time, but I didn't have an easy way of doing it until now, with `cascadia`.

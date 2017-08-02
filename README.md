@@ -5,7 +5,7 @@
 [![GoDoc](https://godoc.org/github.com/suntong/cascadia?status.svg)](http://godoc.org/github.com/suntong/cascadia)
 [![Go Report Card](https://goreportcard.com/badge/github.com/suntong/cascadia)](https://goreportcard.com/report/github.com/suntong/cascadia)
 [![travis Status](https://travis-ci.org/suntong/cascadia.svg?branch=master)](https://travis-ci.org/suntong/cascadia)
-[![codeship Status](https://codeship.com/projects/7fbac590-a3dd-0134-4b89-26c19bdf8358/status?branch=master)](https://codeship.com/projects/190387)
+[![Codeship Status](https://codeship.com/projects/7fbac590-a3dd-0134-4b89-26c19bdf8358/status?branch=master)](https://codeship.com/projects/190387)
 
 ## TOC
 - [Usage](#usage)
@@ -13,6 +13,7 @@
 - [Examples](#examples)
   - [Single selection mode](#single-selection-mode)
   - [Block selection mode](#block-selection-mode)
+    - [Twitter Search](#twitter-search)
   - [Reconstruct the separated pages](#reconstruct-the-separated-pages)
 - [More On CSS Selector](#more-on-css-selector)
 
@@ -23,7 +24,7 @@ The [Go Cascadia package](https://github.com/andybalholm/cascadia) implements CS
 #### $ cascadia
 ```sh
 cascadia wrapper
-built on 2017-04-17
+built on 2017-08-01
 
 Command line interface to go cascadia CSS selectors package
 
@@ -154,6 +155,35 @@ No      Title   Site
 ```
 
 By default it uses tab `\t` as fields delimiter, so the output is in `.tsv` format. To change to `.csv`, add `-d ,` to the command line.
+
+
+#### Twitter Search
+
+Block selection mode is poor man's web scrapping tool, and it is very simple to use. Here is another _practical_ example -- Twitter searching. We all know that you have to [pay for the Twitter Search API and it _only serves Tweets from the past week_](https://dev.twitter.com/rest/public/search). With `cascadia`, you can search the tweets for free, and get the latest content as well.
+
+Here is how I watch for Toronto/GTA's Gas Price Alert, _without getting all other tweets_ from him:
+
+```sh
+$ cascadia -i 'https://twitter.com/search?q=%22Gas%20Price%20Alert%22%20%23GTA%20from%3AGasBuddyDan&src=typd' -o -c 'div.stream div.original-tweet div.content' --piece Time='small.time' --piece Tweet='div.js-tweet-text-container > p'
+Time    Tweet
+
+  Jul 31
+        Gas Price Alert #Toronto #GTA #Hamilton #Ottawa #LdnOnt #Barrie #Kitchener #Niagara #Windsor N/C Tues and to a 2ct/l HIKE gor Wednesday
+
+  Jul 6
+        Gas Price Alert #Toronto #GTA #LdnOnt #Hamilton #Ottawa #Barrie #KW to see a 1 ct/l drop @ for Friday July 7
+
+  May 30
+        Gas Price Alert #Toronto #GTA #Ottawa #LdnOnt #Hamilton #KW #Barrie #Windsor prices won't change Wednesday but will DROP 1 ct/l Thursday
+
+  May 15
+        Gas Price Alert #Toronto #GTA #Barrie #Hamilton #LdnOnt #Ottawa #KW #Windsor NO CHANGE @  except gas bar shenanigans for Tues & Wednesday
+
+  Mar 7
+        Gas Price Alert #Toronto #GTHA #LdnOnt #Ottawa #Barrie #KW #Windsor to see a 1 cent a litre HIKE Wed March 8 (to 107.9 in the #GTA)
+
+```
+
 
 ### Reconstruct the separated pages
 
