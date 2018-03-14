@@ -125,7 +125,7 @@ func Cascadia(bi io.Reader, bw io.Writer, css string, piece MapStringString, noH
 				return fmt.Errorf("requested --text but found more than 1 element")
 			}
 
-			fmt.Fprintf(bw, strings.Join(strings.Fields(getInnerText(ns[0])), " ")+"\n")
+			fmt.Fprintf(bw, strings.Join(strings.Fields(getInnerText(ns[0].FirstChild)), " ")+"\n")
 			return nil
 		}
 
@@ -134,7 +134,7 @@ func Cascadia(bi io.Reader, bw io.Writer, css string, piece MapStringString, noH
 				return fmt.Errorf("requested --raw-text but found more than 1 element")
 			}
 
-			fmt.Fprintf(bw, getInnerText(ns[0])+"\n")
+			fmt.Fprintf(bw, getInnerText(ns[0].FirstChild)+"\n")
 			return nil
 		}
 
