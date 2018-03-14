@@ -32,9 +32,15 @@ Options:
 
   - Name: Deli
     Type: string
-    Flag: d,delimiter
-    Usage: delimiter for pieces csv output
+    Flag: 'd,delimiter'
+    Usage: 'delimiter for pieces csv output'
     Value: "\\t"
+
+  - Name: NoHeader
+    Type: bool
+    Flag: 'no-header'
+    Usage: 'ignore headers when using --piece'
+    Value: false
 
   - Name: WrapHTML
     Type: bool
@@ -45,6 +51,21 @@ Options:
     Type: string
     Flag: b,base
     Usage: base href tag used in the wrapped up html
+
+  - Name: RawAttr
+    Type: string
+    Flag: 'a,attr,raw-attr'
+    Usage: 'extract the innerText from selected element. Ignored when --piece is used'
+
+  - Name: Text
+    Type: bool
+    Flag: 't,text'
+    Usage: 'extract the human readable text from selected element. Ignored when --piece is used'
+
+  - Name: RawText
+    Type: bool
+    Flag: 'r,raw-text'
+    Usage: 'extract the innerText from selected element. Ignored when --piece is used'
 
   - Name: Quiet
     Type: bool
