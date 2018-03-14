@@ -64,6 +64,9 @@ func cascadiaC(ctx *cli.Context) error {
 	// fmt.Println()
 
 	argv := ctx.Argv().(*rootT)
+	defer argv.Filei.Close()
+	defer argv.Fileo.Close()
+
 	WrapHTMLBeg = fmt.Sprintf(`<!DOCTYPE html>
 <html>
   <head>
@@ -85,8 +88,6 @@ func cascadiaC(ctx *cli.Context) error {
 		argv.RawText,
 		argv.Quiet,
 	)
-	argv.Filei.Close()
-	argv.Fileo.Close()
 	return nil
 }
 
