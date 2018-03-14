@@ -30,17 +30,21 @@ Command line interface to go cascadia CSS selectors package
 
 Options:
 
-  -h, --help            display help information
-  -i, --in             *The html/xml file to read from (or stdin)
-  -o, --out            *The output file (or stdout)
-  -c, --css            *CSS selectors
-  -p, --piece           sub CSS selectors within -css to split that block up into pieces
+  -h, --help                display help information
+  -i, --in                 *The html/xml file to read from (or stdin)
+  -o, --out                *The output file (or stdout)
+  -c, --css                *CSS selectors
+  -p, --piece               sub CSS selectors within -css to split that block up into pieces
 			format: PieceName=[RAW:]selector_string
 			RAW: will return the selected as-is; else the text will be returned
-  -d, --delimiter[=	]   delimiter for pieces csv output
-  -w, --wrap-html       wrap up the output with html tags
-  -b, --base            base href tag used in the wrapped up html
-  -q, --quiet           be quiet
+      --no-header[=false]   ignore headers when using --piece
+  -d, --delimiter[=	]       delimiter for pieces csv output
+  -w, --wrap-html           wrap up the output with html tags
+  -b, --base                base href tag used in the wrapped up html
+  -a, --attr, --raw-attr    extract an attribute from selected element. Ignored when --piece is used
+  -t, --text                extract the human readable text from selected element. Ignored when --piece is used
+  -r, --raw-text            extract the innerText from selected element. Ignored when --piece is used
+  -q, --quiet               be quiet
 ```
 
 Its output has two modes, _single selection mode_ and _block selection mode_, depending on whether the `--piece` parameter is given on the command line or not.

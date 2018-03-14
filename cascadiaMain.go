@@ -19,6 +19,7 @@ import (
 	"github.com/andybalholm/cascadia"
 	"github.com/mkideal/cli"
 	"golang.org/x/net/html"
+	"strings"
 )
 
 ////////////////////////////////////////////////////////////////////////////
@@ -63,6 +64,9 @@ func cascadiaC(ctx *cli.Context) error {
 	// fmt.Println()
 
 	argv := ctx.Argv().(*rootT)
+	defer argv.Filei.Close()
+	defer argv.Fileo.Close()
+
 	WrapHTMLBeg = fmt.Sprintf(`<!DOCTYPE html>
 <html>
   <head>
@@ -71,17 +75,26 @@ func cascadiaC(ctx *cli.Context) error {
   </head>
 <body>`, argv.Base)
 
-	Cascadia(argv.Filei, argv.Fileo, argv.CSS, argv.Piece, argv.Deli,
-		argv.WrapHTML, argv.Quiet)
-	argv.Filei.Close()
-	argv.Fileo.Close()
+	Cascadia(
+		argv.Filei,
+		argv.Fileo,
+		argv.CSS,
+		argv.Piece,
+		argv.NoHeader,
+		argv.Deli,
+		argv.WrapHTML,
+		argv.RawAttr,
+		argv.Text,
+		argv.RawText,
+		argv.Quiet,
+	)
 	return nil
 }
 
 //--------------------------------------------------------------------------
 
 // Cascadia filters the input buffer/stream `bi` with CSS selectors `css` and write to the output buffer/stream `bw`.
-func Cascadia(bi io.Reader, bw io.Writer, css string, piece MapStringString, deli string, wrapHTML bool, beQuiet bool) error {
+func Cascadia(bi io.Reader, bw io.Writer, css string, piece MapStringString, noHeader bool, deli string, wrapHTML bool, rawAttr string, text bool, rawText bool, beQuiet bool) error {
 	if len(piece.Values) == 0 {
 		doc, err := html.Parse(bi)
 		abortOn("Input", err)
@@ -93,6 +106,38 @@ func Cascadia(bi io.Reader, bw io.Writer, css string, piece MapStringString, del
 		if !beQuiet {
 			fmt.Fprintf(os.Stderr, "%d elements for '%s':\n", len(ns), css)
 		}
+
+		if rawAttr != "" {
+			if len(ns) != 1 {
+				return fmt.Errorf("requested --raw-attr found more than 1 element")
+			}
+
+			for _, attr := range ns[0].Attr {
+				if attr.Key == rawAttr {
+					fmt.Fprintf(bw, attr.Val)
+				}
+			}
+			return nil
+		}
+
+		if text == true {
+			if len(ns) != 1 {
+				return fmt.Errorf("requested --text but found more than 1 element")
+			}
+
+			fmt.Fprintf(bw, strings.Join(strings.Fields(getInnerText(ns[0].FirstChild)), " ")+"\n")
+			return nil
+		}
+
+		if rawText == true {
+			if len(ns) != 1 {
+				return fmt.Errorf("requested --raw-text but found more than 1 element")
+			}
+
+			fmt.Fprintf(bw, getInnerText(ns[0].FirstChild)+"\n")
+			return nil
+		}
+
 		for _, n := range ns {
 			html.Render(bw, n)
 			fmt.Fprintf(bw, "\n")
@@ -109,11 +154,13 @@ func Cascadia(bi io.Reader, bw io.Writer, css string, piece MapStringString, del
 		if wrapHTML {
 			fmt.Fprintln(bw, WrapHTMLBeg)
 		}
-		// Print csv headers
-		for _, key := range piece.Keys {
-			fmt.Fprintf(bw, "%s%s", key, deli)
+		if noHeader == false {
+			// Print csv headers
+			for _, key := range piece.Keys {
+				fmt.Fprintf(bw, "%s%s", key, deli)
+			}
+			fmt.Fprintf(bw, "\n")
 		}
-		fmt.Fprintf(bw, "\n")
 
 		// Process each item block
 		doc.Find(css).Each(func(index int, item *goquery.Selection) {
@@ -135,6 +182,20 @@ func Cascadia(bi io.Reader, bw io.Writer, css string, piece MapStringString, del
 		}
 	}
 	return nil
+}
+
+func getInnerText(node *html.Node) string {
+	text := ""
+	if node.Type == html.TextNode {
+		text += node.Data
+	} else if node.Type == html.ElementNode && node.FirstChild != nil {
+		text += getInnerText(node.FirstChild)
+	}
+	if node.NextSibling != nil {
+		text += getInnerText(node.NextSibling)
+	}
+
+	return text
 }
 
 //==========================================================================
