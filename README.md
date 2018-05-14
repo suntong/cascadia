@@ -25,7 +25,7 @@ The [Go Cascadia package](https://github.com/andybalholm/cascadia) implements CS
 #### $ cascadia
 ```sh
 cascadia wrapper
-Version 0.2.0 built on 2018-05-12
+Version 1.2.1 built on 2018-05-12
 
 Command line interface to go cascadia CSS selectors package
 
