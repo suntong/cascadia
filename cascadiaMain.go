@@ -38,10 +38,14 @@ type MapStringString struct {
 ////////////////////////////////////////////////////////////////////////////
 // Global variables definitions
 
-var progname = "cascadia"
-var buildTime = "2017-04-17"
+var (
+	progname = "cascadia"
+	version  = "0.2.0"
+	date     = "2018-05-12"
 
-var rootArgv *rootT
+	rootArgv *rootT
+)
+
 var WrapHTMLBeg string
 
 ////////////////////////////////////////////////////////////////////////////
@@ -80,24 +84,28 @@ func cascadiaC(ctx *cli.Context) error {
 
 //--------------------------------------------------------------------------
 
-// Cascadia filters the input buffer/stream `bi` with CSS selectors `css` and write to the output buffer/stream `bw`.
-func Cascadia(bi io.Reader, bw io.Writer, css string, piece MapStringString, deli string, wrapHTML bool, beQuiet bool) error {
+// Cascadia filters the input buffer/stream `bi` with CSS selectors array `cssa` and write to the output buffer/stream `bw`.
+func Cascadia(bi io.Reader, bw io.Writer, cssa []string, piece MapStringString, deli string, wrapHTML bool, beQuiet bool) error {
 	if len(piece.Values) == 0 {
+		// no sub CSS selectors
 		doc, err := html.Parse(bi)
 		abortOn("Input", err)
-		c, err := cascadia.Compile(css)
-		abortOn("CSS Selector string "+css, err)
+		for _, css := range cssa {
+			c, err := cascadia.Compile(css)
+			abortOn("CSS Selector string "+css, err)
 
-		// https://godoc.org/github.com/andybalholm/cascadia
-		ns := c.MatchAll(doc)
-		if !beQuiet {
-			fmt.Fprintf(os.Stderr, "%d elements for '%s':\n", len(ns), css)
-		}
-		for _, n := range ns {
-			html.Render(bw, n)
-			fmt.Fprintf(bw, "\n")
+			// https://godoc.org/github.com/andybalholm/cascadia
+			ns := c.MatchAll(doc)
+			if !beQuiet {
+				fmt.Fprintf(os.Stderr, "%d elements for '%s':\n", len(ns), css)
+			}
+			for _, n := range ns {
+				html.Render(bw, n)
+				fmt.Fprintf(bw, "\n")
+			}
 		}
 	} else {
+		// have sub CSS selectors within -css
 		// fmt.Printf("%v\n", piece)
 
 		// https://godoc.org/github.com/PuerkitoBio/goquery
@@ -116,7 +124,7 @@ func Cascadia(bi io.Reader, bw io.Writer, css string, piece MapStringString, del
 		fmt.Fprintf(bw, "\n")
 
 		// Process each item block
-		doc.Find(css).Each(func(index int, item *goquery.Selection) {
+		doc.Find(cssa[0]).Each(func(index int, item *goquery.Selection) {
 			//fmt.Printf("] #%d: %s\n", index, item.Text())
 			for _, key := range piece.Keys {
 				//fmt.Printf("] %s: %s\n", key, piece.Values[key])

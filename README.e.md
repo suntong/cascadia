@@ -36,7 +36,7 @@ This all sounds rather complicated, but in practice it's quite simple. See the n
 
 ## Examples
 
-### Single selection mode
+### None-block selection mode
 
 All the three `-i -o -c` options are required. By default it reads from `stdin` and output to `stdout`:
 
@@ -51,7 +51,9 @@ Either the input or the output can be followed by a file name:
 $ {{shell .SingleSel2}}
 ```
 
-Of course, any number of selections allowed:
+#### Multi-selection
+
+Of course, any number of selections are allowed (provided out of box from the CSS selection "`,`" syntax):
 
 ```sh
 $ echo '<table border="0" cellpadding="0" cellspacing="0" style="table-layout: fixed; width: 100%; border: 0 dashed; border-color: #FFFFFF"><tr style="height:64px">aaa</tr></table>' | cascadia -i -o -c 'table[border="0"][cellpadding="0"][cellspacing="0"], tr[style=height\:64px]'
@@ -59,6 +61,12 @@ $ echo '<table border="0" cellpadding="0" cellspacing="0" style="table-layout: f
 <table border="0" cellpadding="0" cellspacing="0" style="table-layout: fixed; width: 100%; border: 0 dashed; border-color: #FFFFFF"><tbody><tr style="height:64px"></tr></tbody></table>
 <tr style="height:64px"></tr>
 ```
+
+Or, to make the multi-selection explicit on cli, emphasizing selecting being from different parts using different selectors, one can provide multi `--css` on the command line. E.g.,
+
+    cascadia -o -i http://www.iciba.com/conformity -c 'div.js-base-info > div > div > div.in-base-top.clearfix' -c 'div.js-base-info > div > div > ul' -c 'div.js-base-info > div > div > li' -c 'div.info-article.article-tab'
+
+It'll construct the return from all four `-c` CSS selectors.
 
 ### Block selection mode
 

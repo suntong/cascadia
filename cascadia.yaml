@@ -9,6 +9,8 @@ Text: Command line interface to go cascadia CSS selectors package
 #NumArg: cli.AtLeast(1)
 NumOption: cli.AtLeast(3)
 
+UsageLead: "Usage:\\n  cascadia -i in -c css -o [Options...]"
+
 Options:
   - Name: Filei
     Type: '*clix.Reader'
@@ -21,9 +23,9 @@ Options:
     Usage: 'The output file (or stdout)'
 
   - Name: CSS
-    Type: string
+    Type: '[]string'
     Flag: '*c,css'
-    Usage: CSS selectors
+    Usage: CSS selectors (can provide more if not using --piece)
 
   - Name: Piece
     Type: MapStringString

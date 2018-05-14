@@ -21,7 +21,7 @@ type rootT struct {
 	cli.Helper
 	Filei    *clix.Reader    `cli:"*i,in" usage:"The html/xml file to read from (or stdin)"`
 	Fileo    *clix.Writer    `cli:"*o,out" usage:"The output file (or stdout)"`
-	CSS      string          `cli:"*c,css" usage:"CSS selectors"`
+	CSS      []string        `cli:"*c,css" usage:"CSS selectors (can provide more if not using --piece)"`
 	Piece    MapStringString `cli:"p,piece" usage:"sub CSS selectors within -css to split that block up into pieces\n\t\t\tformat: PieceName=[RAW:]selector_string\n\t\t\tRAW: will return the selected as-is; else the text will be returned"`
 	Deli     string          `cli:"d,delimiter" usage:"delimiter for pieces csv output" dft:"\t"`
 	WrapHTML bool            `cli:"w,wrap-html" usage:"wrap up the output with html tags"`
@@ -32,7 +32,8 @@ type rootT struct {
 var root = &cli.Command{
 	Name: "cascadiaC",
 	Desc: "cascadia wrapper\nVersion " + version + " built on " + date,
-	Text: "Command line interface to go cascadia CSS selectors package",
+	Text: "Command line interface to go cascadia CSS selectors package" +
+		"\n\nUsage:\n  cascadia -i in -c css -o [Options...]",
 	Argv: func() interface{} { return new(rootT) },
 	Fn:   cascadiaC,
 
@@ -47,7 +48,7 @@ var root = &cli.Command{
 //  type OptsT struct {
 //  	Filei	*clix.Reader
 //  	Fileo	*clix.Writer
-//  	CSS	string
+//  	CSS	[]string
 //  	Piece	MapStringString
 //  	Deli	string
 //  	WrapHTML	bool
