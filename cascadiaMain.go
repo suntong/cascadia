@@ -17,7 +17,7 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/andybalholm/cascadia"
-	"github.com/mkideal/cli"
+	"github.com/go-easygen/cli"
 	"golang.org/x/net/html"
 )
 

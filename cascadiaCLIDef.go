@@ -1,17 +1,20 @@
 ////////////////////////////////////////////////////////////////////////////
 // Program: cascadiaC
 // Purpose: cascadia wrapper
-// Authors: Tong Sun (c) 2016-2017, All rights reserved
+// Authors: Tong Sun (c) 2018, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 package main
 
 import (
-	"github.com/mkideal/cli"
-	clix "github.com/mkideal/cli/ext"
+	"github.com/go-easygen/cli"
+	clix "github.com/go-easygen/cli/ext"
 )
 
 ////////////////////////////////////////////////////////////////////////////
+// Constant and data type/structure definitions
+
+//==========================================================================
 // cascadiaC
 
 type rootT struct {
@@ -28,7 +31,7 @@ type rootT struct {
 
 var root = &cli.Command{
 	Name: "cascadiaC",
-	Desc: "cascadia wrapper\nbuilt on " + buildTime,
+	Desc: "cascadia wrapper\nVersion " + version + " built on " + date,
 	Text: "Command line interface to go cascadia CSS selectors package",
 	Argv: func() interface{} { return new(rootT) },
 	Fn:   cascadiaC,
@@ -36,20 +39,60 @@ var root = &cli.Command{
 	NumOption: cli.AtLeast(3),
 }
 
-// func main() {
-// 	cli.SetUsageStyle(cli.ManualStyle) // up-down, for left-right, use NormalStyle
-// 	//NOTE: You can set any writer implements io.Writer
-// 	// default writer is os.Stdout
-// 	if err := cli.Root(root,).Run(os.Args[1:]); err != nil {
-// 		fmt.Fprintln(os.Stderr, err)
-// 	}
-// 	fmt.Println("")
-// }
+// Template for main starts here
+////////////////////////////////////////////////////////////////////////////
+// Constant and data type/structure definitions
 
-// func cascadiaC(ctx *cli.Context) error {
-// 	ctx.JSON(ctx.RootArgv())
-// 	ctx.JSON(ctx.Argv())
-// 	fmt.Println()
+// The OptsT type defines all the configurable options from cli.
+//  type OptsT struct {
+//  	Filei	*clix.Reader
+//  	Fileo	*clix.Writer
+//  	CSS	string
+//  	Piece	MapStringString
+//  	Deli	string
+//  	WrapHTML	bool
+//  	Base	string
+//  	Quiet	bool
+//  	Verbose int
+//  }
 
-// 	return nil
-// }
+////////////////////////////////////////////////////////////////////////////
+// Global variables definitions
+
+//  var (
+//          progname  = "cascadiaC"
+//          version   = "0.1.0"
+//          date = "2018-05-13"
+
+//  	rootArgv *rootT
+//  	// Opts store all the configurable options
+//  	Opts OptsT
+//  )
+
+////////////////////////////////////////////////////////////////////////////
+// Function definitions
+
+// Function main
+//  func main() {
+//  	cli.SetUsageStyle(cli.ManualStyle) // up-down, for left-right, use NormalStyle
+//  	//NOTE: You can set any writer implements io.Writer
+//  	// default writer is os.Stdout
+//  	if err := cli.Root(root,).Run(os.Args[1:]); err != nil {
+//  		fmt.Fprintln(os.Stderr, err)
+//  	}
+//  	fmt.Println("")
+//  }
+
+// Template for main dispatcher starts here
+//==========================================================================
+// Main dispatcher
+
+//  func cascadiaC(ctx *cli.Context) error {
+//  	ctx.JSON(ctx.RootArgv())
+//  	ctx.JSON(ctx.Argv())
+//  	fmt.Println()
+
+//  	return nil
+//  }
+
+// Template for CLI handling starts here
