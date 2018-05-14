@@ -47,9 +47,9 @@ Options:
   -q, --quiet           be quiet
 ```
 
-Its output has two modes, _single selection mode_ and _block selection mode_, depending on whether the `--piece` parameter is given on the command line or not.
+Its output has two modes, _none-block selection mode_ and _block selection mode_, depending on whether the `--piece` parameter is given on the command line or not.
 
-- The single selection mode will output the selection as HTML source, while
+- The none-block selection mode will output the selection as HTML source, while
 - The block selection mode will output HTML text in a tsv/csv table form
 
 For details about the concept of block and pieces, check out [andrew-d/goscrape](https://github.com/andrew-d/goscrape) (in fact, `cascadia` was initially developed just for it, so that I don't need to tweak Go code, build & run it just to test out the block and pieces selectors). Here is the exception:
@@ -93,15 +93,21 @@ $ echo '<table border="0" cellpadding="0" cellspacing="0" style="table-layout: f
 <tr style="height:64px"></tr>
 ```
 
-Or, to make the multi-selection explicit on cli, emphasizing selecting being from different parts using different selectors, one can provide multi `--css` on the command line. E.g.,
+Or, to make the multi-selection explicit on cli, emphasizing selecting being from different parts using different selectors, one can provide multiple `--css` on the command line. E.g.,
 
     cascadia -o -i http://www.iciba.com/conformity -c 'div.js-base-info > div > div > div.in-base-top.clearfix' -c 'div.js-base-info > div > div > ul' -c 'div.js-base-info > div > div > li' -c 'div.info-article.article-tab'
 
 It'll construct the return from all four `-c` CSS selectors.
 
+It has the same effect as using the "`,`" syntax, but
+
+- The CSS selectors are provided explicitly with multiple `--css` parameters.
+- The "`,`" syntax will return according to the order the selections occur in source, while
+- The multiple `--css` will return according to the order the `--css` parameters.
+
 ### Block selection mode
 
-First, as the single selection mode will output the selection as HTML source, so if you want HTML text instead, then you can make use of the block selection mode. 
+First, as the none-block selection mode will output the selection as HTML _source_, so if you want HTML _text_ instead, then you can make use of the block selection mode. 
 
 ```sh
 $ echo '<div class="container"><p align="justify"><b>Name: </b>John Doe</p></div>' | tee /tmp/cascadia.xml | cascadia -i -o -c 'div > p'
