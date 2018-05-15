@@ -1,0 +1,34 @@
+{
+    "package": {
+        "name": "cascadia",
+        "repo": "bin",
+        "subject": "suntong",
+        "desc": "Go cascadia package command line CSS selector",
+        "website_url": "https://github.com/suntong/cascadia",
+        "issue_tracker_url": "https://github.com/suntong/cascadia/issues",
+        "vcs_url": "https://github.com/suntong/cascadia.git",
+        "licenses": ["MIT"],
+        "public_download_numbers": false
+    },
+
+    "version": {
+        "name": "$VERSION",
+        "desc": "Release $VERSION",
+        "released": "$DATE",
+        "vcs_tag": "$VERSION",
+        "gpgSign": true
+    },
+
+    "files": [{
+        "includePattern": "pkg/(.*)\\.deb",
+        "uploadPattern": "pool/main/c/$1_$VERSION_amd64.deb",
+        "matrixParams": {
+            "deb_distribution": "all",
+            "deb_component": "main",
+            "deb_architecture": "amd64",
+            "override": 1
+        }
+    }],
+
+    "publish": true
+}

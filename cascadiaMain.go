@@ -40,7 +40,7 @@ type MapStringString struct {
 
 var (
 	progname = "cascadia"
-	version  = "1.2.1"
+	version  = "1.2.2"
 	date     = "2018-05-12"
 
 	rootArgv *rootT
