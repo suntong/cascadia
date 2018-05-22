@@ -6,6 +6,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/suntong/cascadia)](https://goreportcard.com/report/github.com/suntong/cascadia)
 [![travis Status](https://travis-ci.org/suntong/cascadia.svg?branch=master)](https://travis-ci.org/suntong/cascadia)
 [![Codeship Status](https://codeship.com/projects/7fbac590-a3dd-0134-4b89-26c19bdf8358/status?branch=master)](https://codeship.com/projects/190387)
+[![PoweredBy WireFrame](https://github.com/go-easygen/wireframe/blob/master/PoweredBy-WireFrame-R.svg)](http://godoc.org/github.com/go-easygen/wireframe)
 
 ## TOC
 - [Usage](#usage)
@@ -17,6 +18,7 @@
     - [Twitter Search](#twitter-search)
   - [Reconstruct the separated pages](#reconstruct-the-separated-pages)
 - [More On CSS Selector](#more-on-css-selector)
+  - [Author(s) & Contributor(s)](#author(s)-&-contributor(s))
 
 The [Go Cascadia package](https://github.com/andybalholm/cascadia) implements CSS selectors for html. This is the command line tool, started as a thin wrapper around that package, but growing into a better tool to test CSS selectors without writing Go code:
 
@@ -25,7 +27,7 @@ The [Go Cascadia package](https://github.com/andybalholm/cascadia) implements CS
 #### $ cascadia
 ```sh
 cascadia wrapper
-Version 1.2.2 built on 2018-05-12
+Version 1.2.2 built on 2018-05-22
 
 Command line interface to go cascadia CSS selectors package
 
@@ -230,3 +232,13 @@ I'm not an expert on CSS Selector at all, but the following resources are what I
 - [CSS Selectors Cheat Sheet](http://butlerccwebdev.net/support/css-selectors-cheatsheet.html) I think It's very good, because it's usage oriented and very practical, i.e., it arranges the Selectors according to their purposes. If that's too dry for you, check out
 - [The 30 CSS Selectors You Must Memorize](http://code.tutsplus.com/tutorials/the-30-css-selectors-you-must-memorize--net-16048) It only lists those selectors that are important, but it gives concrete examples and explanations
 - [CSS Selector Reference](http://www.w3schools.com/cssref/css_selectors.asp) from w3schools. This is the one I most often refer to, because the list is comprehensive, and there is also an online [CSS Selector Tester](http://www.w3schools.com/cssref/trysel.asp) that really helped me learn and understand
+
+
+## Author(s) & Contributor(s)
+
+Tong SUN  
+![suntong from cpan.org](https://img.shields.io/badge/suntong-%40cpan.org-lightgrey.svg "suntong from cpan.org")
+
+_Powered by_ [**WireFrame**](https://github.com/go-easygen/wireframe),  [![PoweredBy WireFrame](https://github.com/go-easygen/wireframe/blob/master/PoweredBy-WireFrame-Y.svg)](http://godoc.org/github.com/go-easygen/wireframe), the _one-stop wire-framing solution_ for Go cli based projects, from start to deploy.
+
+All patches welcome.
