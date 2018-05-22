@@ -63,7 +63,7 @@ var root = &cli.Command{
 //  var (
 //          progname  = "cascadiaC"
 //          version   = "0.1.0"
-//          date = "2018-05-13"
+//          date = "2018-05-22"
 
 //  	rootArgv *rootT
 //  	// Opts store all the configurable options

@@ -1,10 +1,10 @@
 ////////////////////////////////////////////////////////////////////////////
 // Program: cascadia
 // Purpose: go cascadia CSS selection from command line
-// Authors: Tong Sun (c) 2016-2017, All rights reserved
+// Authors: Tong Sun (c) 2016-2018, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
-//go:generate sh -v cascadiaCLIGen.sh
+//go:generate sh -v cascadia_cliGen.sh
 
 package main
 
@@ -41,7 +41,7 @@ type MapStringString struct {
 var (
 	progname = "cascadia"
 	version  = "1.2.2"
-	date     = "2018-05-12"
+	date     = "2018-05-22"
 
 	rootArgv *rootT
 )
