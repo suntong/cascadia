@@ -6,7 +6,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/suntong/cascadia)](https://goreportcard.com/report/github.com/suntong/cascadia)
 [![travis Status](https://travis-ci.org/suntong/cascadia.svg?branch=master)](https://travis-ci.org/suntong/cascadia)
 [![Codeship Status](https://codeship.com/projects/7fbac590-a3dd-0134-4b89-26c19bdf8358/status?branch=master)](https://codeship.com/projects/190387)
-[![PoweredBy WireFrame](https://github.com/go-easygen/wireframe/blob/master/PoweredBy-WireFrame-R.svg)](http://godoc.org/github.com/go-easygen/wireframe)
+[![PoweredBy WireFrame](https://github.com/go-easygen/wireframe/blob/master/PoweredBy-WireFrame-B.svg)](http://godoc.org/github.com/go-easygen/wireframe)
 
 ## TOC
 - [Usage](#usage)
@@ -36,17 +36,17 @@ Usage:
 
 Options:
 
-  -h, --help            display help information
-  -i, --in             *The html/xml file to read from (or stdin)
-  -o, --out            *The output file (or stdout)
-  -c, --css            *CSS selectors (can provide more if not using --piece)
-  -p, --piece           sub CSS selectors within -css to split that block up into pieces
+  -h, --help        display help information 
+  -i, --in         *The html/xml file to read from (or stdin) 
+  -o, --out        *The output file (or stdout) 
+  -c, --css        *CSS selectors (can provide more if not using --piece) 
+  -p, --piece       sub CSS selectors within -css to split that block up into pieces
 			format: PieceName=[RAW:]selector_string
-			RAW: will return the selected as-is; else the text will be returned
-  -d, --delimiter[=	]   delimiter for pieces csv output
-  -w, --wrap-html       wrap up the output with html tags
-  -b, --base            base href tag used in the wrapped up html
-  -q, --quiet           be quiet
+			RAW: will return the selected as-is; else the text will be returned 
+  -d, --delimiter   delimiter for pieces csv output [=	]
+  -w, --wrap-html   wrap up the output with html tags 
+  -b, --base        base href tag used in the wrapped up html 
+  -q, --quiet       be quiet
 ```
 
 Its output has two modes, _none-block selection mode_ and _block selection mode_, depending on whether the `--piece` parameter is given on the command line or not.
@@ -239,6 +239,7 @@ I'm not an expert on CSS Selector at all, but the following resources are what I
 Tong SUN  
 ![suntong from cpan.org](https://img.shields.io/badge/suntong-%40cpan.org-lightgrey.svg "suntong from cpan.org")
 
-_Powered by_ [**WireFrame**](https://github.com/go-easygen/wireframe),  [![PoweredBy WireFrame](https://github.com/go-easygen/wireframe/blob/master/PoweredBy-WireFrame-Y.svg)](http://godoc.org/github.com/go-easygen/wireframe), the _one-stop wire-framing solution_ for Go cli based projects, from start to deploy.
+[![PoweredBy WireFrame](https://github.com/go-easygen/wireframe/blob/master/PoweredBy-WireFrame-Y.svg)](http://godoc.org/github.com/go-easygen/wireframe)  
+_Powered by_ [**WireFrame**](https://github.com/go-easygen/wireframe), the _one-stop wire-framing solution_ for Go cli based projects, from start to deploy.
 
 All patches welcome.

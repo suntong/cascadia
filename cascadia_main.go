@@ -52,6 +52,7 @@ var WrapHTMLBeg string
 // Function definitions
 
 func main() {
+	cli.SetUsageStyle(cli.DenseNormalStyle) 
 	if err := cli.Root(root).Run(os.Args[1:]); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 	}
