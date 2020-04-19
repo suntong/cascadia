@@ -1,1 +1,1 @@
- easygen -tf ../../suntong/cli/cli-tx cascadia_cli | gofmt > cascadia_cliDef.go
+ easygen ../../go-easygen/wireframe/cli-ext cascadia_cli | gofmt > cascadia_cliDef.go

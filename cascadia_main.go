@@ -17,7 +17,7 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/andybalholm/cascadia"
-	"github.com/go-easygen/cli"
+	"github.com/mkideal/cli"
 	"golang.org/x/net/html"
 )
 
@@ -40,8 +40,8 @@ type MapStringString struct {
 
 var (
 	progname = "cascadia"
-	version  = "1.2.2"
-	date     = "2018-05-22"
+	version  = "1.2.3"
+	date     = "2020-04-20"
 
 	rootArgv *rootT
 )
@@ -52,7 +52,7 @@ var WrapHTMLBeg string
 // Function definitions
 
 func main() {
-	cli.SetUsageStyle(cli.DenseNormalStyle) 
+	cli.SetUsageStyle(cli.DenseNormalStyle)
 	if err := cli.Root(root).Run(os.Args[1:]); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 	}

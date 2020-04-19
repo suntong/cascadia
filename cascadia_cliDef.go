@@ -1,14 +1,18 @@
 ////////////////////////////////////////////////////////////////////////////
 // Program: cascadiaC
 // Purpose: cascadia wrapper
-// Authors: Tong Sun (c) 2018, All rights reserved
+// Authors: Tong Sun (c) 2020, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 package main
 
 import (
-	"github.com/go-easygen/cli"
-	clix "github.com/go-easygen/cli/ext"
+	//  	"fmt"
+	//  	"os"
+
+	"github.com/mkideal/cli"
+	//  	"github.com/mkideal/cli/clis"
+	clix "github.com/mkideal/cli/ext"
 )
 
 ////////////////////////////////////////////////////////////////////////////
@@ -31,7 +35,8 @@ type rootT struct {
 
 var root = &cli.Command{
 	Name: "cascadiaC",
-	Desc: "cascadia wrapper\nVersion " + version + " built on " + date,
+	Desc: "cascadia wrapper\nVersion " + version + " built on " + date +
+		"\nCopyright (C) 2020, Tong Sun",
 	Text: "Command line interface to go cascadia CSS selectors package" +
 		"\n\nUsage:\n  cascadia -i in -c css -o [Options...]",
 	Argv: func() interface{} { return new(rootT) },
@@ -63,7 +68,7 @@ var root = &cli.Command{
 //  var (
 //          progname  = "cascadiaC"
 //          version   = "0.1.0"
-//          date = "2018-05-22"
+//          date = "2020-04-19"
 
 //  	rootArgv *rootT
 //  	// Opts store all the configurable options
@@ -75,18 +80,19 @@ var root = &cli.Command{
 
 // Function main
 //  func main() {
-//  	cli.SetUsageStyle(cli.ManualStyle) // up-down, for left-right, use NormalStyle
+//  	cli.SetUsageStyle(cli.DenseNormalStyle) // left-right, for up-down, use ManualStyle
 //  	//NOTE: You can set any writer implements io.Writer
 //  	// default writer is os.Stdout
 //  	if err := cli.Root(root,).Run(os.Args[1:]); err != nil {
 //  		fmt.Fprintln(os.Stderr, err)
+//  		os.Exit(1)
 //  	}
 //  	fmt.Println("")
 //  }
 
 // Template for main dispatcher starts here
 //==========================================================================
-// Main dispatcher
+// Dumb root handler
 
 //  func cascadiaC(ctx *cli.Context) error {
 //  	ctx.JSON(ctx.RootArgv())
