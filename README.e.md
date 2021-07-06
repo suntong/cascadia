@@ -14,9 +14,11 @@ SingleSel2: cascadia -i /tmp/cascadia.xml -o -c 'input[name=Sex][value=F]'
 
 ## {{toc 5}}
 
+## {{.Name}} - CSS selector CLI tool
+
 The [Go Cascadia package](https://github.com/andybalholm/cascadia) implements CSS selectors for html. This is the command line tool, started as a thin wrapper around that package, but growing into a better tool to test CSS selectors without writing Go code:
 
-# Usage
+## Usage
 
 #### $ {{exec "cascadia" | color "sh"}}
 
@@ -193,7 +195,7 @@ Collecting as HTML is no trouble either. Here is another example:
 
 The [fifth page is here](http://www.shangxueedu.com/shuxue/ksdg/20170113_162_5.html), and [all pages are collected here](https://docs.google.com/document/d/1StFwP7kChHiGsL-hm3tnY29bsBRQWCU7xdhu2shsGcg/preview). Please check them out.
 
-# More On CSS Selector
+## More On CSS Selector
 
 I'm not an expert on CSS Selector at all, but the following resources are what I found most helpful to me.
 
@@ -201,6 +203,27 @@ I'm not an expert on CSS Selector at all, but the following resources are what I
 - [The 30 CSS Selectors You Must Memorize](http://code.tutsplus.com/tutorials/the-30-css-selectors-you-must-memorize--net-16048) It only lists those selectors that are important, but it gives concrete examples and explanations
 - [CSS Selector Reference](http://www.w3schools.com/cssref/css_selectors.asp) from w3schools. This is the one I most often refer to, because the list is comprehensive, and there is also an online [CSS Selector Tester](http://www.w3schools.com/cssref/trysel.asp) that really helped me learn and understand
 
+## Download/Install
+
+
+### Download binaries
+
+- The latest binary executables are available right under the github release page  
+https://github.com/suntong/{{.Name}}/releases  
+as the result of the Continuous-Integration process.
+- I.e., they are built during every git tagged push, automatically by [GitHub Actions](https://github.com/features/actions), right from the source code, truely WYSIWYG.
+- The `.deb`, `.rpm` and `.apk` packages are readily available, as well as the executables for other Linux and Windows as well.
+- Pick & choose the binary executable that suits your OS and its architecture. E.g., for Linux, it would most probably be the `{{.Name}}_ver_linux_amd64.tar.gz` file.
+- Unzip it and put the executable somewhere in the PATH, after downloading it. 
+
+
+### Install Source
+
+To install the source code instead:
+
+```
+go get github.com/suntong/{{.Name}}
+```
 
 ## Author(s) & Contributor(s)
 
