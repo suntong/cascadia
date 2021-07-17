@@ -71,11 +71,11 @@ func CascadiaC(ctx *cli.Context) error {
 	argv := ctx.Argv().(*rootT)
 	WrapHTMLBeg = fmt.Sprintf(`<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <base href="%s">
-    %s
-  </head>
+<head>
+<meta charset="utf-8">
+<base href="%s">
+%s
+</head>
 <body>`, argv.Base, argv.Style)
 
 	Cascadia(argv.Filei, argv.Fileo, argv.CSS, argv.Piece, argv.Deli,

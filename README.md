@@ -33,8 +33,8 @@ The [Go Cascadia package](https://github.com/andybalholm/cascadia) implements CS
 #### $ cascadia
 ```sh
 cascadia wrapper
-Version 1.2.3 built on 2020-04-20
-Copyright (C) 2020, Tong Sun
+Version 1.2.5 built on 2021-07-16
+Copyright (C) 2021, Tong Sun
 
 Command line interface to go cascadia CSS selectors package
 
@@ -52,6 +52,7 @@ Options:
 			RAW: will return the selected as-is; else the text will be returned 
   -d, --delimiter   delimiter for pieces csv output [=	]
   -w, --wrap-html   wrap up the output with html tags 
+  -y, --style       style component within the wrapped html head 
   -b, --base        base href tag used in the wrapped up html 
   -q, --quiet       be quiet
 ```
@@ -78,8 +79,9 @@ This all sounds rather complicated, but in practice it's quite simple. See the n
 All the three `-i -o -c` options are required. By default it reads from `stdin` and output to `stdout`:
 
 ```sh
-$ echo '<input type="radio" name="Sex" value="F" />' | tee /tmp/cascadia.xml | cascadia -i -o -c 'input[name=Sex][value=M]'
-0 elements for 'input[name=Sex][value=M]':
+$ echo '<input type="radio" name="Sex" value="F" />' | tee /tmp/cascadia.xml | cascadia -i -o -c 'input[name=Sex][value=F]'
+1 elements for 'input[name=Sex][value=F]':
+<input type="radio" name="Sex" value="F"/>
 ```
 
 Either the input or the output can be followed by a file name:
@@ -90,6 +92,53 @@ $ cascadia -i /tmp/cascadia.xml -o -c 'input[name=Sex][value=F]'
 1 elements for 'input[name=Sex][value=F]':
 <input type="radio" name="Sex" value="F"/>
 ```
+
+
+```sh
+$ cascadia -i /tmp/cascadia.xml -c 'input[name=Sex][value=F]' -o /tmp/out.html
+1 elements for 'input[name=Sex][value=F]':
+
+$ cat /tmp/out.html
+<input type="radio" name="Sex" value="F"/>
+```
+
+More other options can be applied too:
+
+```sh
+# using --wrap-html
+$ cascadia -i /tmp/cascadia.xml -c 'input[name=Sex][value=F]' -o /tmp/out.html -w
+1 elements for 'input[name=Sex][value=F]':
+
+$ cat /tmp/out.html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<base href="">
+
+</head>
+<body>
+<input type="radio" name="Sex" value="F"/>
+</body>
+
+# using --wrap-html with --style
+$ cascadia -i /tmp/cascadia.xml -c 'input[name=Sex][value=F]' -o /tmp/out.html -w -y '<link rel="stylesheet" href="styles.css">'
+1 elements for 'input[name=Sex][value=F]':
+
+$ cat /tmp/out.html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<base href="">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<input type="radio" name="Sex" value="F"/>
+</body>
+```
+
+For more on using the `--style` option, check out ["adding styles"](https://github.com/suntong/cascadia/wiki/Adding-styles).
 
 #### Multi-selection
 
