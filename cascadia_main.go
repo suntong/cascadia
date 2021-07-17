@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////
 // Program: cascadia
 // Purpose: go cascadia CSS selection from command line
-// Authors: Tong Sun (c) 2016-2018, All rights reserved
+// Authors: Tong Sun (c) 2016-2021, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 //go:generate sh -v cascadia_cliGen.sh
@@ -40,8 +40,8 @@ type MapStringString struct {
 
 var (
 	progname = "cascadia"
-	version  = "1.2.3"
-	date     = "2020-04-20"
+	version  = "1.2.5"
+	date     = "2021-07-16"
 
 	rootArgv *rootT
 )
@@ -62,8 +62,9 @@ func main() {
 //==========================================================================
 // css selection
 
-func cascadiaC(ctx *cli.Context) error {
+func CascadiaC(ctx *cli.Context) error {
 	// ctx.JSON(ctx.RootArgv())
+	// fmt.Println()
 	// ctx.JSON(ctx.Argv())
 	// fmt.Println()
 
@@ -73,8 +74,9 @@ func cascadiaC(ctx *cli.Context) error {
   <head>
     <meta charset="utf-8">
     <base href="%s">
+    %s
   </head>
-<body>`, argv.Base)
+<body>`, argv.Base, argv.Style)
 
 	Cascadia(argv.Filei, argv.Fileo, argv.CSS, argv.Piece, argv.Deli,
 		argv.WrapHTML, argv.Quiet)
@@ -87,6 +89,9 @@ func cascadiaC(ctx *cli.Context) error {
 
 // Cascadia filters the input buffer/stream `bi` with CSS selectors array `cssa` and write to the output buffer/stream `bw`.
 func Cascadia(bi io.Reader, bw io.Writer, cssa []string, piece MapStringString, deli string, wrapHTML bool, beQuiet bool) error {
+	if wrapHTML {
+		fmt.Fprintln(bw, WrapHTMLBeg)
+	}
 	if len(piece.Values) == 0 {
 		// no sub CSS selectors
 		doc, err := html.Parse(bi)
@@ -115,9 +120,6 @@ func Cascadia(bi io.Reader, bw io.Writer, cssa []string, piece MapStringString, 
 		doc, err := goquery.NewDocumentFromReader(bi)
 		abortOn("Input", err)
 
-		if wrapHTML {
-			fmt.Fprintln(bw, WrapHTMLBeg)
-		}
 		// Print csv headers
 		for _, key := range piece.Keys {
 			fmt.Fprintf(bw, "%s%s", key, deli)
@@ -139,9 +141,9 @@ func Cascadia(bi io.Reader, bw io.Writer, cssa []string, piece MapStringString, 
 			}
 			fmt.Fprintf(bw, "\n")
 		})
-		if wrapHTML {
-			fmt.Fprintln(bw, WrapHTMLEnd)
-		}
+	}
+	if wrapHTML {
+		fmt.Fprintln(bw, WrapHTMLEnd)
 	}
 	return nil
 }

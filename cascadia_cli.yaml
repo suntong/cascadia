@@ -44,6 +44,11 @@ Options:
     Flag: w,wrap-html
     Usage: wrap up the output with html tags
 
+  - Name: Style
+    Type: string
+    Flag: y,style
+    Usage: style component within the wrapped html head
+
   - Name: Base
     Type: string
     Flag: b,base

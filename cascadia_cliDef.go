@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////
 // Program: cascadiaC
 // Purpose: cascadia wrapper
-// Authors: Tong Sun (c) 2020, All rights reserved
+// Authors: Tong Sun (c) 2021, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 package main
@@ -29,6 +29,7 @@ type rootT struct {
 	Piece    MapStringString `cli:"p,piece" usage:"sub CSS selectors within -css to split that block up into pieces\n\t\t\tformat: PieceName=[RAW:]selector_string\n\t\t\tRAW: will return the selected as-is; else the text will be returned"`
 	Deli     string          `cli:"d,delimiter" usage:"delimiter for pieces csv output" dft:"\t"`
 	WrapHTML bool            `cli:"w,wrap-html" usage:"wrap up the output with html tags"`
+	Style    string          `cli:"y,style" usage:"style component within the wrapped html head"`
 	Base     string          `cli:"b,base" usage:"base href tag used in the wrapped up html"`
 	Quiet    bool            `cli:"q,quiet" usage:"be quiet"`
 }
@@ -36,11 +37,11 @@ type rootT struct {
 var root = &cli.Command{
 	Name: "cascadiaC",
 	Desc: "cascadia wrapper\nVersion " + version + " built on " + date +
-		"\nCopyright (C) 2020, Tong Sun",
+		"\nCopyright (C) 2021, Tong Sun",
 	Text: "Command line interface to go cascadia CSS selectors package" +
 		"\n\nUsage:\n  cascadia -i in -c css -o [Options...]",
 	Argv: func() interface{} { return new(rootT) },
-	Fn:   cascadiaC,
+	Fn:   CascadiaC,
 
 	NumOption: cli.AtLeast(3),
 }
@@ -57,6 +58,7 @@ var root = &cli.Command{
 //  	Piece	MapStringString
 //  	Deli	string
 //  	WrapHTML	bool
+//  	Style	string
 //  	Base	string
 //  	Quiet	bool
 //  	Verbose int
@@ -68,7 +70,7 @@ var root = &cli.Command{
 //  var (
 //          progname  = "cascadiaC"
 //          version   = "0.1.0"
-//          date = "2020-04-19"
+//          date = "2021-07-16"
 
 //  	rootArgv *rootT
 //  	// Opts store all the configurable options
@@ -80,9 +82,7 @@ var root = &cli.Command{
 
 // Function main
 //  func main() {
-//  	cli.SetUsageStyle(cli.DenseNormalStyle) // left-right, for up-down, use ManualStyle
-//  	//NOTE: You can set any writer implements io.Writer
-//  	// default writer is os.Stdout
+//  	cli.SetUsageStyle(cli.DenseNormalStyle)
 //  	if err := cli.Root(root,).Run(os.Args[1:]); err != nil {
 //  		fmt.Fprintln(os.Stderr, err)
 //  		os.Exit(1)
@@ -94,7 +94,8 @@ var root = &cli.Command{
 //==========================================================================
 // Dumb root handler
 
-//  func cascadiaC(ctx *cli.Context) error {
+// CascadiaC - main dispatcher dumb handler
+//  func CascadiaC(ctx *cli.Context) error {
 //  	ctx.JSON(ctx.RootArgv())
 //  	ctx.JSON(ctx.Argv())
 //  	fmt.Println()
