@@ -14,6 +14,7 @@ import (
 	"io"
 	"os"
 	"regexp"
+	"strings"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/andybalholm/cascadia"
@@ -35,15 +36,31 @@ type MapStringString struct {
 	Raw    map[string]bool
 }
 
+// The OptsT type defines all the configurable options from cli.
+type OptsT struct {
+	CSS      []string
+	TextOut  bool
+	TextRaw  bool
+	Piece    MapStringString
+	Deli     string
+	WrapHTML bool
+	Style    string
+	Base     string
+	Quiet    bool
+	Verbose  int
+}
+
 ////////////////////////////////////////////////////////////////////////////
 // Global variables definitions
 
 var (
 	progname = "cascadia"
-	version  = "1.2.5"
-	date     = "2021-07-16"
+	version  = "1.2.6"
+	date     = "2021-11-28"
 
 	rootArgv *rootT
+	// Opts store all the configurable options
+	Opts OptsT
 )
 
 var WrapHTMLBeg string
@@ -78,8 +95,11 @@ func CascadiaC(ctx *cli.Context) error {
 </head>
 <body>`, argv.Base, argv.Style)
 
-	Cascadia(argv.Filei, argv.Fileo, argv.CSS, argv.Piece, argv.Deli,
-		argv.WrapHTML, argv.Quiet)
+	Opts.CSS, Opts.Piece, Opts.Deli,
+		Opts.WrapHTML, Opts.TextOut, Opts.TextRaw, Opts.Quiet =
+		argv.CSS, argv.Piece, argv.Deli,
+		argv.WrapHTML, argv.TextOut, argv.TextRaw, argv.Quiet
+	Cascadia(argv.Filei, argv.Fileo, Opts)
 	argv.Filei.Close()
 	argv.Fileo.Close()
 	return nil
@@ -87,31 +107,54 @@ func CascadiaC(ctx *cli.Context) error {
 
 //--------------------------------------------------------------------------
 
-// Cascadia filters the input buffer/stream `bi` with CSS selectors array `cssa` and write to the output buffer/stream `bw`.
-func Cascadia(bi io.Reader, bw io.Writer, cssa []string, piece MapStringString, deli string, wrapHTML bool, beQuiet bool) error {
+// Cascadia filters the input buffer/stream `bi` with CSS selectors array `Opts.CSS` and write to the output buffer/stream `bw`.
+func Cascadia(bi io.Reader, bw io.Writer, Opts OptsT) error {
+	cssa, piece, deli, wrapHTML, textOut, textRaw, beQuiet :=
+		Opts.CSS, Opts.Piece, Opts.Deli,
+		Opts.WrapHTML, Opts.TextOut, Opts.TextRaw, Opts.Quiet
 	if wrapHTML {
 		fmt.Fprintln(bw, WrapHTMLBeg)
 	}
 	if len(piece.Values) == 0 {
-		// no sub CSS selectors
-		doc, err := html.Parse(bi)
-		abortOn("Input", err)
-		for _, css := range cssa {
-			c, err := cascadia.Compile(css)
-			abortOn("CSS Selector string "+css, err)
+		// no sub CSS selectors -- none-block selection mode
+		if textOut {
+			doc, err := goquery.NewDocumentFromReader(bi)
+			abortOn("Input", err)
 
-			// https://godoc.org/github.com/andybalholm/cascadia
-			ns := c.MatchAll(doc)
-			if !beQuiet {
-				fmt.Fprintf(os.Stderr, "%d elements for '%s':\n", len(ns), css)
+			for _, css := range cssa {
+				// Process each item block
+				doc.Find(css).Each(func(index int, item *goquery.Selection) {
+					//fmt.Printf("] #%d: %s\n", index, item.Text())
+					if textRaw {
+						fmt.Fprintf(bw, "%s%s",
+							item.Text(), deli)
+					} else {
+						fmt.Fprintf(bw, "%s%s",
+							strings.TrimSpace(item.Text()), deli)
+					}
+					fmt.Fprintf(bw, "\n")
+				})
 			}
-			for _, n := range ns {
-				html.Render(bw, n)
-				fmt.Fprintf(bw, "\n")
+		} else {
+			doc, err := html.Parse(bi)
+			abortOn("Input", err)
+			for _, css := range cssa {
+				c, err := cascadia.Compile(css)
+				abortOn("CSS Selector string "+css, err)
+
+				// https://godoc.org/github.com/andybalholm/cascadia
+				ns := c.MatchAll(doc)
+				if !beQuiet {
+					fmt.Fprintf(os.Stderr, "%d elements for '%s':\n", len(ns), css)
+				}
+				for _, n := range ns {
+					html.Render(bw, n)
+					fmt.Fprintf(bw, "\n")
+				}
 			}
 		}
 	} else {
-		// have sub CSS selectors within -css
+		// have sub CSS selectors within -css -- block selection mode
 		// fmt.Printf("%v\n", piece)
 
 		// https://godoc.org/github.com/PuerkitoBio/goquery
