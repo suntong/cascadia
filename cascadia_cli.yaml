@@ -33,6 +33,11 @@ Options:
     Flag: t,text
     Usage: Text output for none-block selection mode
 
+  - Name: TextRaw
+    Type: bool
+    Flag: R,Raw
+    Usage: Raw text output, no trimming of leading and trailing white space
+
   - Name: Piece
     Type: MapStringString
     Flag: 'p,piece'
