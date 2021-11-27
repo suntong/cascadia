@@ -26,6 +26,7 @@ type rootT struct {
 	Filei    *clix.Reader    `cli:"*i,in" usage:"The html/xml file to read from (or stdin)"`
 	Fileo    *clix.Writer    `cli:"*o,out" usage:"The output file (or stdout)"`
 	CSS      []string        `cli:"*c,css" usage:"CSS selectors (can provide more if not using --piece)"`
+	TextOut  bool            `cli:"t,text" usage:"Text output for none-block selection mode"`
 	Piece    MapStringString `cli:"p,piece" usage:"sub CSS selectors within -css to split that block up into pieces\n\t\t\tformat: PieceName=[RAW:]selector_string\n\t\t\tRAW: will return the selected as-is; else the text will be returned"`
 	Deli     string          `cli:"d,delimiter" usage:"delimiter for pieces csv output" dft:"\t"`
 	WrapHTML bool            `cli:"w,wrap-html" usage:"wrap up the output with html tags"`
@@ -55,6 +56,7 @@ var root = &cli.Command{
 //  	Filei	*clix.Reader
 //  	Fileo	*clix.Writer
 //  	CSS	[]string
+//  	TextOut	bool
 //  	Piece	MapStringString
 //  	Deli	string
 //  	WrapHTML	bool
@@ -70,7 +72,7 @@ var root = &cli.Command{
 //  var (
 //          progname  = "cascadiaC"
 //          version   = "0.1.0"
-//          date = "2021-07-16"
+//          date = "2021-11-27"
 
 //  	rootArgv *rootT
 //  	// Opts store all the configurable options

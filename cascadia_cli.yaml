@@ -28,6 +28,11 @@ Options:
     Flag: '*c,css'
     Usage: CSS selectors (can provide more if not using --piece)
 
+  - Name: TextOut
+    Type: bool
+    Flag: t,text
+    Usage: Text output for none-block selection mode
+
   - Name: Piece
     Type: MapStringString
     Flag: 'p,piece'
