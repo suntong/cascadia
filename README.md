@@ -33,7 +33,7 @@ The [Go Cascadia package](https://github.com/andybalholm/cascadia) implements CS
 #### $ cascadia
 ```sh
 cascadia wrapper
-Version 1.2.5 built on 2021-07-16
+Version 1.2.6 built on 2021-11-28
 Copyright (C) 2021, Tong Sun
 
 Command line interface to go cascadia CSS selectors package
@@ -47,6 +47,8 @@ Options:
   -i, --in         *The html/xml file to read from (or stdin) 
   -o, --out        *The output file (or stdout) 
   -c, --css        *CSS selectors (can provide more if not using --piece) 
+  -t, --text        Text output for none-block selection mode 
+  -R, --Raw         Raw text output, no trimming of leading and trailing white space 
   -p, --piece       sub CSS selectors within -css to split that block up into pieces
 			format: PieceName=[RAW:]selector_string
 			RAW: will return the selected as-is; else the text will be returned 
@@ -59,9 +61,6 @@ Options:
 
 Its output has two modes, _none-block selection mode_ and _block selection mode_, depending on whether the `--piece` parameter is given on the command line or not.
 
-- The none-block selection mode will output the selection as HTML source, while
-- The block selection mode will output HTML text in a tsv/csv table form
-
 For details about the concept of block and pieces, check out [andrew-d/goscrape](https://github.com/andrew-d/goscrape) (in fact, `cascadia` was initially developed just for it, so that I don't need to tweak Go code, build & run it just to test out the block and pieces selectors). Here is the exception:
 
 - Inside each page, there's 1 or more *blocks* - some logical method of splitting up a page into subcomponents.
@@ -71,6 +70,14 @@ For details about the concept of block and pieces, check out [andrew-d/goscrape]
 
 This all sounds rather complicated, but in practice it's quite simple. See the next section for details.
 
+In summary,
+
+- The none-block selection mode will output the selection as HTML source by default
+  * but if `-t`, or `--text` cli option is provided, the none-block selection mode will [output as text](https://github.com/suntong/cascadia/issues/6#issuecomment-980757881) instead.
+    - By default, such text output will get their leading and trailing white space trimmed.
+    - However, if `-R`, or `--Raw` cli option is provided, no trimming will be done.
+- The block selection mode will output HTML as text in a `tsv`/`csv` table form by default
+  * if the `--piece` selection is prefixed with `RAW:`, then that specific block selection will output in HTML instead. See the following for details.
 
 ## Examples
 
