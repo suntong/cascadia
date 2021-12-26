@@ -41,11 +41,22 @@
         "bug",
         "userTesting"
       ]
+    },
+    {
+      "login": "mh-cbon",
+      "name": "mh-cbon",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17096799?v=4",
+      "profile": "https://github.com/mh-cbon",
+      "contributions": [
+        "bug",
+        "ideas",
+        "userTesting"
+      ]
     }
   ],
   "contributorsPerLine": 7,
-  "projectName": "cc2py2",
-  "projectOwner": "go-cc",
+  "projectName": "cascadia",
+  "projectOwner": "suntong",
   "repoType": "github",
   "repoHost": "https://github.com",
   "skipCi": true
