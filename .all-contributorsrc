@@ -30,6 +30,17 @@
         "maintenance",
         "infra"
       ]
+    },
+    {
+      "login": "hoshsadiq",
+      "name": "Hosh",
+      "avatar_url": "https://avatars.githubusercontent.com/u/600045?v=4",
+      "profile": "https://github.com/hoshsadiq",
+      "contributions": [
+        "code",
+        "bug",
+        "userTesting"
+      ]
     }
   ],
   "contributorsPerLine": 7,
