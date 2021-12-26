@@ -1,0 +1,26 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "hoshsadiq",
+      "name": "Hosh",
+      "avatar_url": "https://avatars.githubusercontent.com/u/600045?v=4",
+      "profile": "https://github.com/hoshsadiq",
+      "contributions": [
+        "code",
+        "bug",
+        "userTesting"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "cascadia",
+  "projectOwner": "suntong",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
