@@ -52,6 +52,16 @@
         "ideas",
         "userTesting"
       ]
+    },
+    {
+      "login": "digglife",
+      "name": "朱聖黎 (Zhu Sheng Li)",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1468378?v=4",
+      "profile": "https://www.digglife.net",
+      "contributions": [
+        "bug",
+        "userTesting"
+      ]
     }
   ],
   "contributorsPerLine": 7,
