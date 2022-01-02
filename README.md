@@ -223,7 +223,6 @@ Tong SUN
 _Powered by_ [**WireFrame**](https://github.com/go-easygen/wireframe)  
 [![PoweredBy WireFrame](https://github.com/go-easygen/wireframe/blob/master/PoweredBy-WireFrame-Y.svg)](http://godoc.org/github.com/go-easygen/wireframe)  
 the _one-stop wire-framing solution_ for Go cli based projects, from _init_ to _deploy_.
-
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
