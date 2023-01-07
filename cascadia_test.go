@@ -26,7 +26,7 @@ func TestSelectors(t *testing.T) {
 	}
 }
 
-////////////////////////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////////////////////
 // The following is taken from
 // https://github.com/andybalholm/cascadia/blob/c56252c33997d9b9991f4c1e3b5fbc82d6d656b3/selector_test.go
 type selectorTest struct {
@@ -548,4 +548,99 @@ var selectorTests = []selectorTest{
 			`<button>Sign up</button>`,
 		},
 	},
+}
+
+type PieceAttrTest struct {
+	HTML, selector string
+	results        []string
+	piece          MapStringString
+}
+
+var PieceAttrTests = []PieceAttrTest{
+	{
+		`<ul>
+			<li><a id="a1" href="http://www.google.com/finance"/>
+			<li><a id="a2" href="http://finance.yahoo.com/"/>
+			<li><a id="a3" href="https://www.google.com/news"></a>
+			<li><a id="a4" href="http://news.yahoo.com"/>
+		</ul>`,
+		`li`,
+		[]string{
+			`id,`,
+			`a1,`,
+			`a2,`,
+			`a3,`,
+			`a4,`,
+		},
+		MapStringString{
+			[]string{"id"},
+			map[string]string{"id": "a"},
+			map[string]OutputStyle{"id": OutputStyleATTR},
+			map[string]string{"id": "id"},
+		},
+	},
+	{
+		`<ul>
+			<li><a id="a1" href="http://www.google.com/finance"/>
+			<li><a id="a2" href="http://finance.yahoo.com/"/>
+			<li><a id="a3" href="https://www.google.com/news"></a>
+			<li><a id="a4" href="http://news.yahoo.com"/>
+		</ul>`,
+		`li`,
+		[]string{
+			`href2,`,
+			`,`,
+			`,`,
+			`,`,
+			`,`,
+		},
+		MapStringString{
+			[]string{"href2"},
+			map[string]string{"href2": "a"},
+			map[string]OutputStyle{"href2": OutputStyleATTR},
+			map[string]string{"href2": "href2"},
+		},
+	},
+	{
+		`<ul>
+			<li><a id="a1" href="http://www.google.com/finance"/>
+			<li><a id="a2" href="http://finance.yahoo.com/"/>
+			<li><a id="a3" href="https://www.google.com/news"></a>
+			<li><a id="a4" href="http://news.yahoo.com"/>
+		</ul>`,
+		`li`,
+		[]string{
+			`href,`,
+			`http://www.google.com/finance,`,
+			`http://finance.yahoo.com/,`,
+			`https://www.google.com/news,`,
+			`http://news.yahoo.com,`,
+		},
+		MapStringString{
+			[]string{"href"},
+			map[string]string{"href": "a"},
+			map[string]OutputStyle{"href": OutputStyleATTR},
+			map[string]string{"href": "href"},
+		},
+	},
+}
+
+func TestPieceAttr(t *testing.T) {
+	for _, test := range PieceAttrTests {
+		buf := bytes.NewBufferString("")
+		Opts.CSS, Opts.Piece, Opts.Deli,
+			Opts.WrapHTML, Opts.TextOut, Opts.TextRaw, Opts.Quiet =
+			[]string{test.selector}, test.piece, ",",
+			false, false, false, false
+		Cascadia(strings.NewReader(test.HTML), buf, Opts)
+		got := buf.String()
+		if len(got) == 0 && len(test.results) == 0 {
+			// correct
+			continue
+		}
+		want := strings.Join(test.results, "\n") + "\n"
+		if got != want {
+			t.Errorf("wanted %s, got %s instead", want, got)
+		}
+	}
 }
