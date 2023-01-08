@@ -73,6 +73,17 @@
         "bug",
         "userTesting"
       ]
+    },
+    {
+      "login": "0xdevalias",
+      "name": "Glenn 'devalias' Grant",
+      "avatar_url": "https://avatars.githubusercontent.com/u/753891?v=4",
+      "profile": "http://www.devalias.net/",
+      "contributions": [
+        "code",
+        "bug",
+        "userTesting"
+      ]
     }
   ],
   "contributorsPerLine": 7,
