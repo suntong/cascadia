@@ -1,6 +1,6 @@
 # cascadia
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![MIT License](http://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -241,6 +241,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/mh-cbon"><img src="https://avatars.githubusercontent.com/u/17096799?v=4?s=100" width="100px;" alt="mh-cbon"/><br /><sub><b>mh-cbon</b></sub></a><br /><a href="https://github.com/suntong/cascadia/issues?q=author%3Amh-cbon" title="Bug reports">🐛</a> <a href="#ideas-mh-cbon" title="Ideas, Planning, & Feedback">🤔</a> <a href="#userTesting-mh-cbon" title="User Testing">📓</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://www.digglife.net"><img src="https://avatars.githubusercontent.com/u/1468378?v=4?s=100" width="100px;" alt="朱聖黎 (Zhu Sheng Li)"/><br /><sub><b>朱聖黎 (Zhu Sheng Li)</b></sub></a><br /><a href="https://github.com/suntong/cascadia/issues?q=author%3Adigglife" title="Bug reports">🐛</a> <a href="#userTesting-digglife" title="User Testing">📓</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/himcc"><img src="https://avatars.githubusercontent.com/u/3031794?v=4?s=100" width="100px;" alt="himcc"/><br /><sub><b>himcc</b></sub></a><br /><a href="https://github.com/suntong/cascadia/commits?author=himcc" title="Code">💻</a> <a href="https://github.com/suntong/cascadia/issues?q=author%3Ahimcc" title="Bug reports">🐛</a> <a href="#userTesting-himcc" title="User Testing">📓</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://www.devalias.net/"><img src="https://avatars.githubusercontent.com/u/753891?v=4?s=100" width="100px;" alt="Glenn 'devalias' Grant"/><br /><sub><b>Glenn 'devalias' Grant</b></sub></a><br /><a href="https://github.com/suntong/cascadia/commits?author=0xdevalias" title="Code">💻</a> <a href="https://github.com/suntong/cascadia/issues?q=author%3A0xdevalias" title="Bug reports">🐛</a> <a href="#userTesting-0xdevalias" title="User Testing">📓</a></td>
     </tr>
   </tbody>
 </table>
