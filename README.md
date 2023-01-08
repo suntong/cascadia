@@ -33,8 +33,8 @@ The [Go Cascadia package](https://github.com/andybalholm/cascadia) implements CS
 ### $ cascadia
 ```sh
 cascadia wrapper
-Version 1.2.6 built on 2021-11-28
-Copyright (C) 2021, Tong Sun
+Version 1.2.7 built on 2023-01-08
+Copyright (C) 2023, Tong Sun
 
 Command line interface to go cascadia CSS selectors package
 
@@ -50,11 +50,11 @@ Options:
   -t, --text        Text output for none-block selection mode 
   -R, --Raw         Raw text output, no trimming of leading and trailing white space 
   -p, --piece       sub CSS selectors within -css to split that block up into pieces
-			format: PieceName=[OutputStyle:]selector_string
-			OutputStyle:
-				RAW : will return the selected as-is
-				attr[xxx] : will return the value of an attribute named xxx
-			else the text will be returned 
+				format: PieceName=[OutputStyle:]selector_string
+				 OutputStyle:
+				  RAW : will return the selected as-is
+				  attr[xx] : will return the value of xx attribute
+				else the text will be returned 
   -d, --delimiter   delimiter for pieces csv output [=	]
   -w, --wrap-html   wrap up the output with html tags 
   -y, --style       style component within the wrapped html head 
@@ -152,6 +152,9 @@ $ cat /tmp/out.html
   * [None-block selection mode](https://github.com/suntong/cascadia/wiki#none-block-selection-mode)
     * [Multi-selection](https://github.com/suntong/cascadia/wiki#multi-selection)
   * [Block selection mode](https://github.com/suntong/cascadia/wiki#block-selection-mode)
+    * [Block selection mode HTML output](https://github.com/suntong/cascadia/wiki#block-selection-mode-html-output)
+    * [Block selection mode table output](https://github.com/suntong/cascadia/wiki#block-selection-mode-table-output)
+    * [Attribute selection](https://github.com/suntong/cascadia/wiki#attribute-selection)
     * [Twitter Search](https://github.com/suntong/cascadia/wiki#twitter-search)
   * [Reconstruct the separated pages](https://github.com/suntong/cascadia/wiki#reconstruct-the-separated-pages)
   * [More On CSS Selector](https://github.com/suntong/cascadia/wiki#more-on-css-selector)
