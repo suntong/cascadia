@@ -62,6 +62,17 @@
         "bug",
         "userTesting"
       ]
+    },
+    {
+      "login": "himcc",
+      "name": "himcc",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3031794?v=4",
+      "profile": "https://github.com/himcc",
+      "contributions": [
+        "code",
+        "bug",
+        "userTesting"
+      ]
     }
   ],
   "contributorsPerLine": 7,
@@ -69,5 +80,6 @@
   "projectOwner": "suntong",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "skipCi": true
+  "skipCi": true,
+  "commitConvention": "angular"
 }
