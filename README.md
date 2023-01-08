@@ -50,8 +50,11 @@ Options:
   -t, --text        Text output for none-block selection mode 
   -R, --Raw         Raw text output, no trimming of leading and trailing white space 
   -p, --piece       sub CSS selectors within -css to split that block up into pieces
-			format: PieceName=[RAW:]selector_string
-			RAW: will return the selected as-is; else the text will be returned 
+			format: PieceName=[OutputStyle:]selector_string
+			OutputStyle:
+				RAW : will return the selected as-is
+				attr[xxx] : will return the value of an attribute named xxx
+			else the text will be returned 
   -d, --delimiter   delimiter for pieces csv output [=	]
   -w, --wrap-html   wrap up the output with html tags 
   -y, --style       style component within the wrapped html head 

@@ -26,14 +26,23 @@ import (
 // Constant and data type/structure definitions
 
 const (
-	IsRaw       = "RAW:"
+	IsRaw       = "RAW"
 	WrapHTMLEnd = `</body>`
 )
 
-type MapStringString struct {
-	Keys   []string
-	Values map[string]string
-	Raw    map[string]bool
+type OutputStyle int
+
+const (
+	OutputStyleRAW OutputStyle = iota
+	OutputStyleATTR
+	OutputStyleTEXT
+)
+
+type OutputStyleMap struct {
+	Keys         []string
+	Values       map[string]string
+	OutputStyles map[string]OutputStyle
+	AttrName     map[string]string
 }
 
 // The OptsT type defines all the configurable options from cli.
@@ -41,7 +50,7 @@ type OptsT struct {
 	CSS      []string
 	TextOut  bool
 	TextRaw  bool
-	Piece    MapStringString
+	Piece    OutputStyleMap
 	Deli     string
 	WrapHTML bool
 	Style    string
@@ -174,10 +183,14 @@ func Cascadia(bi io.Reader, bw io.Writer, Opts OptsT) error {
 			//fmt.Printf("] #%d: %s\n", index, item.Text())
 			for _, key := range piece.Keys {
 				//fmt.Printf("] %s: %s\n", key, piece.Values[key])
-				if piece.Raw[key] {
+				switch piece.OutputStyles[key] {
+				case OutputStyleRAW:
 					html.Render(bw, item.Find(piece.Values[key]).Get(0))
 					fmt.Fprintf(bw, deli)
-				} else {
+				case OutputStyleATTR:
+					fmt.Fprintf(bw, "%s%s",
+						item.Find(piece.Values[key]).AttrOr(piece.AttrName[key], ""), deli)
+				case OutputStyleTEXT:
 					fmt.Fprintf(bw, "%s%s",
 						item.Find(piece.Values[key]).Contents().Text(), deli)
 				}
@@ -196,13 +209,14 @@ func Cascadia(bi io.Reader, bw io.Writer, Opts OptsT) error {
 
 // DecodeSlice implements cli.SliceDecoder
 // NOTE: if SliceDecoder not implemented, the Decode method would be only invoked once
-func (MapStringString) DecodeSlice() {}
+func (OutputStyleMap) DecodeSlice() {}
 
 // Decode implements cli.Decoder interface
-func (m *MapStringString) Decode(s string) error {
+func (m *OutputStyleMap) Decode(s string) error {
 	if (m.Values) == nil {
 		m.Values = make(map[string]string)
-		m.Raw = make(map[string]bool)
+		m.OutputStyles = make(map[string]OutputStyle)
+		m.AttrName = make(map[string]string)
 	}
 	matches := regexp.MustCompile("(.*)=(.*)").FindStringSubmatch(s)
 	if len(matches) < 2 {
@@ -210,9 +224,20 @@ func (m *MapStringString) Decode(s string) error {
 	}
 	key := matches[1]
 	val := matches[2]
-	if len(val) >= 4 && val[:4] == IsRaw {
-		m.Raw[key] = true
-		val = val[4:]
+	index := strings.Index(val, ":")
+	if index > 0 {
+		style := val[:index]
+		val = val[index+1:]
+		if style == IsRaw {
+			m.OutputStyles[key] = OutputStyleRAW
+		} else if strings.HasPrefix(style, "attr[") && strings.HasSuffix(style, "]") {
+			m.OutputStyles[key] = OutputStyleATTR
+			m.AttrName[key] = style[5 : len(style)-1]
+		} else {
+			m.OutputStyles[key] = OutputStyleTEXT
+		}
+	} else {
+		m.OutputStyles[key] = OutputStyleTEXT
 	}
 	m.Keys = append(m.Keys, key)
 	m.Values[key] = val
