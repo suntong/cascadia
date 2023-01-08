@@ -11,7 +11,7 @@ func TestSelectors(t *testing.T) {
 		buf := bytes.NewBufferString("")
 		Opts.CSS, Opts.Piece, Opts.Deli,
 			Opts.WrapHTML, Opts.TextOut, Opts.TextRaw, Opts.Quiet =
-			[]string{test.selector}, MapStringString{}, ",",
+			[]string{test.selector}, OutputStyleMap{}, ",",
 			false, false, false, false
 		Cascadia(strings.NewReader(test.HTML), buf, Opts)
 		got := buf.String()
@@ -553,7 +553,7 @@ var selectorTests = []selectorTest{
 type PieceAttrTest struct {
 	HTML, selector string
 	results        []string
-	piece          MapStringString
+	piece          OutputStyleMap
 }
 
 var PieceAttrTests = []PieceAttrTest{
@@ -572,7 +572,7 @@ var PieceAttrTests = []PieceAttrTest{
 			`a3,`,
 			`a4,`,
 		},
-		MapStringString{
+		OutputStyleMap{
 			[]string{"id"},
 			map[string]string{"id": "a"},
 			map[string]OutputStyle{"id": OutputStyleATTR},
@@ -594,7 +594,7 @@ var PieceAttrTests = []PieceAttrTest{
 			`,`,
 			`,`,
 		},
-		MapStringString{
+		OutputStyleMap{
 			[]string{"href2"},
 			map[string]string{"href2": "a"},
 			map[string]OutputStyle{"href2": OutputStyleATTR},
@@ -616,7 +616,7 @@ var PieceAttrTests = []PieceAttrTest{
 			`https://www.google.com/news,`,
 			`http://news.yahoo.com,`,
 		},
-		MapStringString{
+		OutputStyleMap{
 			[]string{"href"},
 			map[string]string{"href": "a"},
 			map[string]OutputStyle{"href": OutputStyleATTR},

@@ -39,7 +39,7 @@ Options:
     Usage: Raw text output, no trimming of leading and trailing white space
 
   - Name: Piece
-    Type: MapStringString
+    Type: OutputStyleMap
     Flag: 'p,piece'
     Usage: 'sub CSS selectors within -css to split that block up into pieces\n\t\t\tformat: PieceName=[RAW:]selector_string\n\t\t\tRAW: will return the selected as-is; else the text will be returned'
 

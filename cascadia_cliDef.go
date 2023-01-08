@@ -28,7 +28,7 @@ type rootT struct {
 	CSS      []string        `cli:"*c,css" usage:"CSS selectors (can provide more if not using --piece)"`
 	TextOut  bool            `cli:"t,text" usage:"Text output for none-block selection mode"`
 	TextRaw  bool            `cli:"R,Raw" usage:"Raw text output, no trimming of leading and trailing white space"`
-	Piece    MapStringString `cli:"p,piece" usage:"sub CSS selectors within -css to split that block up into pieces\n\t\t\tformat: PieceName=[OutputStyle:]selector_string\n\t\t\tOutputStyle:\n\t\t\t\tRAW : will return the selected as-is\n\t\t\t\tattr[xxx] : will return the value of an attribute named xxx \n\t\t\telse the text will be returned"`
+	Piece    OutputStyleMap `cli:"p,piece" usage:"sub CSS selectors within -css to split that block up into pieces\n\t\t\tformat: PieceName=[OutputStyle:]selector_string\n\t\t\tOutputStyle:\n\t\t\t\tRAW : will return the selected as-is\n\t\t\t\tattr[xxx] : will return the value of an attribute named xxx \n\t\t\telse the text will be returned"`
 	Deli     string          `cli:"d,delimiter" usage:"delimiter for pieces csv output" dft:"\t"`
 	WrapHTML bool            `cli:"w,wrap-html" usage:"wrap up the output with html tags"`
 	Style    string          `cli:"y,style" usage:"style component within the wrapped html head"`
@@ -59,7 +59,7 @@ var root = &cli.Command{
 //  	CSS	[]string
 //  	TextOut	bool
 //  	TextRaw	bool
-//  	Piece	MapStringString
+//  	Piece	OutputStyleMap
 //  	Deli	string
 //  	WrapHTML	bool
 //  	Style	string

@@ -38,7 +38,7 @@ const (
 	OutputStyleTEXT
 )
 
-type MapStringString struct {
+type OutputStyleMap struct {
 	Keys         []string
 	Values       map[string]string
 	OutputStyles map[string]OutputStyle
@@ -50,7 +50,7 @@ type OptsT struct {
 	CSS      []string
 	TextOut  bool
 	TextRaw  bool
-	Piece    MapStringString
+	Piece    OutputStyleMap
 	Deli     string
 	WrapHTML bool
 	Style    string
@@ -209,10 +209,10 @@ func Cascadia(bi io.Reader, bw io.Writer, Opts OptsT) error {
 
 // DecodeSlice implements cli.SliceDecoder
 // NOTE: if SliceDecoder not implemented, the Decode method would be only invoked once
-func (MapStringString) DecodeSlice() {}
+func (OutputStyleMap) DecodeSlice() {}
 
 // Decode implements cli.Decoder interface
-func (m *MapStringString) Decode(s string) error {
+func (m *OutputStyleMap) Decode(s string) error {
 	if (m.Values) == nil {
 		m.Values = make(map[string]string)
 		m.OutputStyles = make(map[string]OutputStyle)
