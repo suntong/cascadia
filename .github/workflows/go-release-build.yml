@@ -6,16 +6,22 @@ on:
       - 'master'
     tags:
       - 'v*'
+  pull_request:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       -
+        name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      -
         name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.15
+          go-version: 1.16
 
       -
         name: Install Cloudsmith CLI
@@ -24,20 +30,19 @@ jobs:
         # See https://help.cloudsmith.io/docs/cli
 
       -
-        name: Checkout
-        uses: actions/checkout@v2
+        name: Cache Go modules
+        uses: actions/cache@v1
+        # Do before go get
         with:
-          fetch-depth: 0
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
 
       -
         name: Tests
         run: |
-          export GOPATH=/home/runner/go
-          mkdir -p $GOPATH/src/github.com/$GITHUB_ACTOR
-          mv $GITHUB_WORKSPACE $GOPATH/src/github.com/$GITHUB_ACTOR
-          ln -s $GOPATH/src/github.com/$GITHUB_REPOSITORY $GITHUB_WORKSPACE
-          # go mod tidy
-          go get -v ./...
+          go mod tidy
           go test -v ./...
 
       -
