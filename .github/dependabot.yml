@@ -1,0 +1,11 @@
+# https://help.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+  - package-ecosystem: "gomod"
+    directory: "/" # Location of package manifests
+    # Specify the number of open pull requests allowed
+    open-pull-requests-limit: 1
+    # new requests are blocked until you merge or close some of the open requests, after which new pull requests can be opened on subsequent updates.
+    schedule:
+      interval: "monthly"
