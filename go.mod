@@ -3,10 +3,10 @@ module github.com/suntong/cascadia
 go 1.18
 
 require (
-	github.com/PuerkitoBio/goquery v1.8.0
+	github.com/PuerkitoBio/goquery v1.8.1
 	github.com/andybalholm/cascadia v1.3.1
 	github.com/mkideal/cli v0.2.7
-	golang.org/x/net v0.5.0
+	golang.org/x/net v0.7.0
 )
 
 require (
@@ -15,7 +15,7 @@ require (
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/mkideal/expr v0.1.0 // indirect
 	github.com/mkideal/pkg v0.1.3 // indirect
-	golang.org/x/crypto v0.0.0-20201221181555-eec23a3978ad // indirect
-	golang.org/x/sys v0.4.0 // indirect
-	golang.org/x/term v0.4.0 // indirect
+	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519 // indirect
+	golang.org/x/sys v0.5.0 // indirect
+	golang.org/x/term v0.5.0 // indirect
 )
