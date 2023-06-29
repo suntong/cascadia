@@ -172,7 +172,7 @@ func Cascadia(bi io.Reader, bw io.Writer, Opts OptsT) error {
 					fmt.Fprintf(bw, deli)
 				case PieceStyleATTR:
 					fmt.Fprintf(bw, "%s%s",
-						item.Find(piece.Values[key]).AttrOr(piece.AttrName[key], ""), deli)
+						item.AttrOr(piece.Values[key], ""), deli)
 				case PieceStyleTEXT:
 					fmt.Fprintf(bw, "%s%s",
 						item.Find(piece.Values[key]).Contents().Text(), deli)

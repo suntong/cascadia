@@ -9,22 +9,25 @@ package main
 import (
 	"errors"
 	"regexp"
-	"strings"
 )
 
 type PieceStyle int
 
 const (
-	PieceStyleRAW PieceStyle = iota
+	PieceStyleTEXT PieceStyle = iota
+	PieceStyleRAW
 	PieceStyleATTR
-	PieceStyleTEXT
 )
 
 type PieceStyleMap struct {
 	Keys        []string
 	Values      map[string]string
 	PieceStyles map[string]PieceStyle
-	AttrName    map[string]string
+}
+
+var pieceStyles = map[string]PieceStyle{
+	"RAW":  PieceStyleRAW,
+	"ATTR": PieceStyleATTR,
 }
 
 //==========================================================================
@@ -39,30 +42,22 @@ func (m *PieceStyleMap) Decode(s string) error {
 	if (m.Values) == nil {
 		m.Values = make(map[string]string)
 		m.PieceStyles = make(map[string]PieceStyle)
-		m.AttrName = make(map[string]string)
 	}
-	matches := regexp.MustCompile("(.*)=(.*)").FindStringSubmatch(s)
-	if len(matches) < 2 {
+	matches := regexp.MustCompile("(.*)=((.*?):)?(.*)").FindStringSubmatch(s)
+	if len(matches) < 3 {
 		return errors.New("format error. To get help, run: " + progname)
 	}
 	key := matches[1]
-	val := matches[2]
-	index := strings.Index(val, ":")
-	if index > 0 {
-		style := val[:index]
-		val = val[index+1:]
-		if style == IsRaw {
-			m.PieceStyles[key] = PieceStyleRAW
-		} else if strings.HasPrefix(style, "attr[") && strings.HasSuffix(style, "]") {
-			m.PieceStyles[key] = PieceStyleATTR
-			m.AttrName[key] = style[5 : len(style)-1]
-		} else {
-			m.PieceStyles[key] = PieceStyleTEXT
-		}
-	} else {
-		m.PieceStyles[key] = PieceStyleTEXT
+	ptp := matches[3] // piece type
+	val := matches[4]
+	style := PieceStyle(0)
+	style, ok := pieceStyles[ptp]
+	//fmt.Println("]", key, ptp, style, ok, val)
+	if len(ptp) != 0 && !ok {
+		return errors.New("Piece style specification error. To get help, run: " + progname)
 	}
 	m.Keys = append(m.Keys, key)
+	m.PieceStyles[key] = style
 	m.Values[key] = val
 	return nil
 }
