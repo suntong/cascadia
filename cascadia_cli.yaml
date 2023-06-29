@@ -39,9 +39,9 @@ Options:
     Usage: Raw text output, no trimming of leading and trailing white space
 
   - Name: Piece
-    Type: OutputStyleMap
+    Type: PieceStyleMap
     Flag: 'p,piece'
-    Usage: 'sub CSS selectors within -css to split that block up into pieces\n\t\t\t\tformat: PieceName=[OutputStyle:]selector_string\n\t\t\t\t OutputStyle:\n\t\t\t\t  RAW : will return the selected as-is\n\t\t\t\t  attr[xx] : will return the value of xx attribute\n\t\t\t\telse the text will be returned'
+    Usage: 'sub CSS selectors within -css to split that block up into pieces\n\t\t\t\tformat: PieceName=[PieceStyle:]selector_string\n\t\t\t\t PieceStyle:\n\t\t\t\t  RAW : will return the selected as-is\n\t\t\t\t  attr[xx] : will return the value of xx attribute\n\t\t\t\telse the text will be returned'
 
   - Name: Deli
     Type: string

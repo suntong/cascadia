@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////
 // Program: cascadia
 // Purpose: go cascadia CSS selection from command line
-// Authors: Tong Sun (c) 2016-2021, All rights reserved
+// Authors: Tong Sun (c) 2016-2023, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 //go:generate sh -v cascadia_cliGen.sh
@@ -9,11 +9,9 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"io"
 	"os"
-	"regexp"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -30,27 +28,12 @@ const (
 	WrapHTMLEnd = `</body>`
 )
 
-type OutputStyle int
-
-const (
-	OutputStyleRAW OutputStyle = iota
-	OutputStyleATTR
-	OutputStyleTEXT
-)
-
-type OutputStyleMap struct {
-	Keys         []string
-	Values       map[string]string
-	OutputStyles map[string]OutputStyle
-	AttrName     map[string]string
-}
-
 // The OptsT type defines all the configurable options from cli.
 type OptsT struct {
 	CSS      []string
 	TextOut  bool
 	TextRaw  bool
-	Piece    OutputStyleMap
+	Piece    PieceStyleMap
 	Deli     string
 	WrapHTML bool
 	Style    string
@@ -183,14 +166,14 @@ func Cascadia(bi io.Reader, bw io.Writer, Opts OptsT) error {
 			//fmt.Printf("] #%d: %s\n", index, item.Text())
 			for _, key := range piece.Keys {
 				//fmt.Printf("] %s: %s\n", key, piece.Values[key])
-				switch piece.OutputStyles[key] {
-				case OutputStyleRAW:
+				switch piece.PieceStyles[key] {
+				case PieceStyleRAW:
 					html.Render(bw, item.Find(piece.Values[key]).Get(0))
 					fmt.Fprintf(bw, deli)
-				case OutputStyleATTR:
+				case PieceStyleATTR:
 					fmt.Fprintf(bw, "%s%s",
 						item.Find(piece.Values[key]).AttrOr(piece.AttrName[key], ""), deli)
-				case OutputStyleTEXT:
+				case PieceStyleTEXT:
 					fmt.Fprintf(bw, "%s%s",
 						item.Find(piece.Values[key]).Contents().Text(), deli)
 				}
@@ -201,46 +184,6 @@ func Cascadia(bi io.Reader, bw io.Writer, Opts OptsT) error {
 	if wrapHTML {
 		fmt.Fprintln(bw, WrapHTMLEnd)
 	}
-	return nil
-}
-
-//==========================================================================
-// cli parameter handling
-
-// DecodeSlice implements cli.SliceDecoder
-// NOTE: if SliceDecoder not implemented, the Decode method would be only invoked once
-func (OutputStyleMap) DecodeSlice() {}
-
-// Decode implements cli.Decoder interface
-func (m *OutputStyleMap) Decode(s string) error {
-	if (m.Values) == nil {
-		m.Values = make(map[string]string)
-		m.OutputStyles = make(map[string]OutputStyle)
-		m.AttrName = make(map[string]string)
-	}
-	matches := regexp.MustCompile("(.*)=(.*)").FindStringSubmatch(s)
-	if len(matches) < 2 {
-		return errors.New("format error. To get help, run: " + progname)
-	}
-	key := matches[1]
-	val := matches[2]
-	index := strings.Index(val, ":")
-	if index > 0 {
-		style := val[:index]
-		val = val[index+1:]
-		if style == IsRaw {
-			m.OutputStyles[key] = OutputStyleRAW
-		} else if strings.HasPrefix(style, "attr[") && strings.HasSuffix(style, "]") {
-			m.OutputStyles[key] = OutputStyleATTR
-			m.AttrName[key] = style[5 : len(style)-1]
-		} else {
-			m.OutputStyles[key] = OutputStyleTEXT
-		}
-	} else {
-		m.OutputStyles[key] = OutputStyleTEXT
-	}
-	m.Keys = append(m.Keys, key)
-	m.Values[key] = val
 	return nil
 }
 

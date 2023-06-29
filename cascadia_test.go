@@ -11,7 +11,7 @@ func TestSelectors(t *testing.T) {
 		buf := bytes.NewBufferString("")
 		Opts.CSS, Opts.Piece, Opts.Deli,
 			Opts.WrapHTML, Opts.TextOut, Opts.TextRaw, Opts.Quiet =
-			[]string{test.selector}, OutputStyleMap{}, ",",
+			[]string{test.selector}, PieceStyleMap{}, ",",
 			false, false, false, false
 		Cascadia(strings.NewReader(test.HTML), buf, Opts)
 		got := buf.String()
