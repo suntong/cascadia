@@ -24,12 +24,6 @@ jobs:
           go-version: 1.19
 
       -
-        name: Install Cloudsmith CLI
-        run: pip install --upgrade cloudsmith-cli
-        # Cloudsmith CLI tooling for pushing releases
-        # See https://help.cloudsmith.io/docs/cli
-
-      -
         name: Cache Go modules
         uses: actions/cache@v1
         # Do before go get
@@ -43,6 +37,7 @@ jobs:
         name: Tests
         run: |
           go mod tidy
+          go build -v -trimpath
           go test -v ./...
 
       -
@@ -54,6 +49,13 @@ jobs:
           args: release --rm-dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      -
+        name: Install Cloudsmith CLI
+        run: pip install --upgrade cloudsmith-cli
+        if: success() && startsWith(github.ref, 'refs/tags/')
+        # Cloudsmith CLI tooling for pushing releases
+        # See https://help.cloudsmith.io/docs/cli
 
       # Publish to cloudsmith repo
       -
