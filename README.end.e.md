@@ -1,4 +1,8 @@
 
+## Install Debian/Ubuntu package
+
+    sudo apt install -y {{.Name}}
+
 ## Download/install binaries
 
 - The latest binary executables are available 
@@ -29,7 +33,7 @@ rmdir -v {{.Name}}_*_linux_amd64
 
 ### Distro package
 
-- Packages available for Linux distros are
+- [Packages available for Linux distros](https://cloudsmith.io/~suntong/repos/repo/packages/) are
   * [Alpine Linux](https://cloudsmith.io/~suntong/repos/repo/setup/#formats-alpine)
   * [Debian](https://cloudsmith.io/~suntong/repos/repo/setup/#formats-deb)
   * [RedHat](https://cloudsmith.io/~suntong/repos/repo/setup/#formats-rpm)
@@ -47,10 +51,10 @@ curl -1sLf \
 
 # That's it. You then can do your normal operations, like
 
-sudo apt-get update
+sudo apt update
 apt-cache policy {{.Name}}
 
-sudo apt-get install -y {{.Name}}
+sudo apt install -y {{.Name}}
 ```
 
 ## Install Source
@@ -58,7 +62,7 @@ sudo apt-get install -y {{.Name}}
 To install the source code instead:
 
 ```
-go get -v -u {{.ProjectURL}}
+go install {{.ProjectURL}}@latest
 ```
 
 ## Author
@@ -69,4 +73,3 @@ Tong SUN
 _Powered by_ [**WireFrame**](https://github.com/go-easygen/wireframe)  
 [![PoweredBy WireFrame](https://github.com/go-easygen/wireframe/blob/master/PoweredBy-WireFrame-Y.svg)](http://godoc.org/github.com/go-easygen/wireframe)  
 the _one-stop wire-framing solution_ for Go cli based projects, from _init_ to _deploy_.
-

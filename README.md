@@ -33,8 +33,8 @@ The [Go Cascadia package](https://github.com/andybalholm/cascadia) implements CS
 ### $ cascadia
 ```sh
 cascadia wrapper
-Version 1.2.7 built on 2023-01-08
-Copyright (C) 2023, Tong Sun
+Version 1.3.0 built on 2023-06-30
+Copyright (C) 2016-2023, Tong Sun
 
 Command line interface to go cascadia CSS selectors package
 
@@ -50,11 +50,11 @@ Options:
   -t, --text        Text output for none-block selection mode 
   -R, --Raw         Raw text output, no trimming of leading and trailing white space 
   -p, --piece       sub CSS selectors within -css to split that block up into pieces
-				format: PieceName=[OutputStyle:]selector_string
-				 OutputStyle:
-				  RAW : will return the selected as-is
-				  attr[xx] : will return the value of xx attribute
-				else the text will be returned 
+			format: PieceName=[PieceStyle:]selector_string
+			 PieceStyle:
+			  RAW : will return the selected as-is
+			  ATTR : will return the value of attribute selector_string
+			 Else the text will be returned 
   -d, --delimiter   delimiter for pieces csv output [=	]
   -w, --wrap-html   wrap up the output with html tags 
   -y, --style       style component within the wrapped html head 
@@ -159,6 +159,10 @@ $ cat /tmp/out.html
   * [Reconstruct the separated pages](https://github.com/suntong/cascadia/wiki#reconstruct-the-separated-pages)
   * [More On CSS Selector](https://github.com/suntong/cascadia/wiki#more-on-css-selector)
 
+## Install Debian/Ubuntu package
+
+    sudo apt install -y cascadia
+
 ## Download/install binaries
 
 - The latest binary executables are available 
@@ -189,7 +193,7 @@ rmdir -v cascadia_*_linux_amd64
 
 ### Distro package
 
-- Packages available for Linux distros are
+- [Packages available for Linux distros](https://cloudsmith.io/~suntong/repos/repo/packages/) are
   * [Alpine Linux](https://cloudsmith.io/~suntong/repos/repo/setup/#formats-alpine)
   * [Debian](https://cloudsmith.io/~suntong/repos/repo/setup/#formats-deb)
   * [RedHat](https://cloudsmith.io/~suntong/repos/repo/setup/#formats-rpm)
@@ -207,10 +211,10 @@ curl -1sLf \
 
 # That's it. You then can do your normal operations, like
 
-sudo apt-get update
+sudo apt update
 apt-cache policy cascadia
 
-sudo apt-get install -y cascadia
+sudo apt install -y cascadia
 ```
 
 ## Install Source
@@ -218,7 +222,7 @@ sudo apt-get install -y cascadia
 To install the source code instead:
 
 ```
-go get -v -u github.com/suntong/cascadia
+go install github.com/suntong/cascadia@latest
 ```
 
 ## Author

@@ -44,13 +44,13 @@ func (m *PieceStyleMap) Decode(s string) error {
 		m.PieceStyles = make(map[string]PieceStyle)
 	}
 	matches := regexp.MustCompile("(.*)=((.*?):)?(.*)").FindStringSubmatch(s)
-	if len(matches) < 3 {
+	if len(matches) < 4 {
 		return errors.New("format error. To get help, run: " + progname)
 	}
 	key := matches[1]
 	ptp := matches[3] // piece type
 	val := matches[4]
-	style := PieceStyle(0)
+	style := PieceStyleTEXT
 	style, ok := pieceStyles[ptp]
 	//fmt.Println("]", key, ptp, style, ok, val)
 	if len(ptp) != 0 && !ok {

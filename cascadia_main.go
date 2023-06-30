@@ -47,8 +47,8 @@ type OptsT struct {
 
 var (
 	progname = "cascadia"
-	version  = "1.2.7"
-	date     = "2023-01-08"
+	version  = "1.3.0"
+	date     = "2023-06-30"
 
 	rootArgv *rootT
 	// Opts store all the configurable options
