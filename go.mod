@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
-	github.com/andybalholm/cascadia v1.3.1
+	github.com/andybalholm/cascadia v1.3.2
 	github.com/mkideal/cli v0.2.7
 	golang.org/x/net v0.10.0
 )
