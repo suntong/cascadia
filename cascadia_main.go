@@ -169,7 +169,7 @@ func Cascadia(bi io.Reader, bw io.Writer, Opts OptsT) error {
 				switch piece.PieceStyles[key] {
 				case PieceStyleRAW:
 					html.Render(bw, item.Find(piece.Values[key]).Get(0))
-					fmt.Fprintf(bw, deli)
+					fmt.Fprintf(bw, "%s", deli)
 				case PieceStyleATTR:
 					fmt.Fprintf(bw, "%s%s",
 						item.AttrOr(piece.Values[key], ""), deli)
