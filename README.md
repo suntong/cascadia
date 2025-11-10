@@ -33,8 +33,8 @@ The [Go Cascadia package](https://github.com/andybalholm/cascadia) implements CS
 ### $ cascadia
 ```sh
 cascadia wrapper
-Version 1.3.0 built on 2023-06-30
-Copyright (C) 2016-2023, Tong Sun
+Version 1.5.0 built on 2025-11-10
+Copyright (C) 2016-2025, Tong Sun
 
 Command line interface to go cascadia CSS selectors package
 
@@ -54,6 +54,7 @@ Options:
 			 PieceStyle:
 			  RAW : will return the selected as-is
 			  ATTR : will return the value of attribute selector_string
+			  GOQR : will extract attribute value from the selector_string of the format selector.attr(attributeName)
 			 Else the text will be returned 
   -d, --delimiter   delimiter for pieces csv output [=	]
   -w, --wrap-html   wrap up the output with html tags 

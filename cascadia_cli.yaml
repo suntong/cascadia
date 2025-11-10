@@ -42,7 +42,7 @@ Options:
   - Name: Piece
     Type: PieceStyleMap
     Flag: 'p,piece'
-    Usage: 'sub CSS selectors within -css to split that block up into pieces\n\t\t\tformat: PieceName=[PieceStyle:]selector_string\n\t\t\t PieceStyle:\n\t\t\t  RAW : will return the selected as-is\n\t\t\t  ATTR : will return the value of attribute selector_string\n\t\t\t Else the text will be returned'
+    Usage: 'sub CSS selectors within -css to split that block up into pieces\n\t\t\tformat: PieceName=[PieceStyle:]selector_string\n\t\t\t PieceStyle:\n\t\t\t  RAW : will return the selected as-is\n\t\t\t  ATTR : will return the value of attribute selector_string\n\t\t\t  GOQR : will extract attribute value from the selector_string of the format selector.attr(attributeName)\n\t\t\t Else the text will be returned'
 
   - Name: Deli
     Type: string

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////
 // Program: cascadiaC
 // Purpose: cascadia wrapper
-// Authors: Tong Sun (c) 2016-2023, All rights reserved
+// Authors: Tong Sun (c) 2016-2025, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 package main
@@ -39,7 +39,7 @@ type rootT struct {
 var root = &cli.Command{
 	Name: "cascadiaC",
 	Desc: "cascadia wrapper\nVersion " + version + " built on " + date +
-		"\nCopyright (C) 2016-2023, Tong Sun",
+		"\nCopyright (C) 2016-2025, Tong Sun",
 	Text: "Command line interface to go cascadia CSS selectors package" +
 		"\n\nUsage:\n  cascadia -i in -c css -o [Options...]",
 	Argv: func() interface{} { return new(rootT) },
@@ -74,7 +74,7 @@ var root = &cli.Command{
 //  var (
 //          progname  = "cascadiaC"
 //          version   = "0.1.0"
-//          date = "2023-06-29"
+//          date = "2025-11-10"
 
 //  	rootArgv *rootT
 //  	// Opts store all the configurable options

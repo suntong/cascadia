@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////
 // Program: cascadia
 // Purpose: go cascadia CSS selection from command line
-// Authors: Tong Sun (c) 2016-2023, All rights reserved
+// Authors: Tong Sun (c) 2016-2025, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 //go:generate sh -v cascadia_cliGen.sh
@@ -47,8 +47,8 @@ type OptsT struct {
 
 var (
 	progname = "cascadia"
-	version  = "1.3.0"
-	date     = "2023-06-30"
+	version  = "1.5.0"
+	date     = "2025-11-10"
 
 	rootArgv *rootT
 	// Opts store all the configurable options
