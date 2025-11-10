@@ -9,6 +9,7 @@ package main
 import (
 	"errors"
 	"regexp"
+	"strings"
 )
 
 type PieceStyle int
@@ -17,17 +18,21 @@ const (
 	PieceStyleTEXT PieceStyle = iota
 	PieceStyleRAW
 	PieceStyleATTR
+	PieceStyleGOQR
 )
 
 type PieceStyleMap struct {
-	Keys        []string
-	Values      map[string]string
-	PieceStyles map[string]PieceStyle
+	Keys          []string
+	Values        map[string]string
+	PieceStyles   map[string]PieceStyle
+	GoqrSelectors map[string]string
+	GoqrAttrs     map[string]string
 }
 
 var pieceStyles = map[string]PieceStyle{
 	"RAW":  PieceStyleRAW,
 	"ATTR": PieceStyleATTR,
+	"GOQR": PieceStyleGOQR,
 }
 
 //==========================================================================
@@ -39,11 +44,13 @@ func (PieceStyleMap) DecodeSlice() {}
 
 // Decode implements cli.Decoder interface
 func (m *PieceStyleMap) Decode(s string) error {
-	if (m.Values) == nil {
+	if m.Values == nil {
 		m.Values = make(map[string]string)
 		m.PieceStyles = make(map[string]PieceStyle)
+		m.GoqrSelectors = make(map[string]string)
+		m.GoqrAttrs = make(map[string]string)
 	}
-	matches := regexp.MustCompile("(.*)=((.*?):)?(.*)").FindStringSubmatch(s)
+	matches := regexp.MustCompile("(.*?)=((.*?):)?(.*)").FindStringSubmatch(s)
 	if len(matches) < 4 {
 		return errors.New("format error. To get help, run: " + progname)
 	}
@@ -56,6 +63,19 @@ func (m *PieceStyleMap) Decode(s string) error {
 	if len(ptp) != 0 && !ok {
 		return errors.New("Piece style specification error. To get help, run: " + progname)
 	}
+
+	if style == PieceStyleGOQR {
+		// selector.attr(attributeName)
+		parts := strings.Split(val, ".attr(")
+		if len(parts) != 2 || !strings.HasSuffix(parts[1], ")") {
+			return errors.New("GOQR format error. To get help, run: " + progname)
+		}
+		selector := parts[0]
+		attr := strings.TrimSuffix(parts[1], ")")
+		m.GoqrSelectors[key] = selector
+		m.GoqrAttrs[key] = attr
+	}
+
 	m.Keys = append(m.Keys, key)
 	m.PieceStyles[key] = style
 	m.Values[key] = val
