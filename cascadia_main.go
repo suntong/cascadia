@@ -175,6 +175,7 @@ func Cascadia(bi io.Reader, bw io.Writer, Opts OptsT) error {
 						item.AttrOr(piece.Values[key], ""), deli)
 				case PieceStyleGOQR:
 					val := strings.TrimSpace(item.Find(piece.GoqrSelectors[key]).AttrOr(piece.GoqrAttrs[key], ""))
+					//fmt.Fprintf(os.Stderr, "] %s (%s:%s): '%+v'\n", key, piece.GoqrSelectors[key], piece.GoqrAttrs[key], val)
 					fmt.Fprintf(bw, "%s%s", val, deli)
 				case PieceStyleTEXT:
 					txt := strings.TrimSpace(item.Find(piece.Values[key]).Contents().Text())

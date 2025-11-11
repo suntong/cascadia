@@ -33,7 +33,8 @@ func TestPiece(t *testing.T) {
 }
 
 func TestPieceGoqr(t *testing.T) {
-	testCases(t, "Piece Goqr", []testCase{
+	testCases(t, "Piece Attributes GOQR", []testCase{
 		{"piece_goqr", []string{"-i", "opt_piece_attr.html", "-o", "-c", "li", "-p", "id=GOQR:a.attr(id)", "-p", "url=GOQR:a.attr(href)"}},
+		{"piece_goqr_missing", []string{"-i", "opt_piece_attr.html", "-o", "-c", "li", "-p", "id=GOQR:a.attr(id)", "-p", "url=GOQR:a.project-namespace-path.attr(href)"}},
 	})
 }
