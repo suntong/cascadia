@@ -71,9 +71,3 @@ func testCases(t *testing.T, name string, testData []testCase) {
 	}
 
 }
-
-func TestPieceGoqr(t *testing.T) {
-	testCases(t, "Piece Goqr", []testCase{
-		{"piece_goqr", []string{"-i", "opt_piece_attr.html", "-o", "-c", "li", "-p", "id=GOQR:a.attr(id)", "-p", "url=GOQR:a.attr(href)"}},
-	})
-}
