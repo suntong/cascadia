@@ -50,7 +50,7 @@ func (m *PieceStyleMap) Decode(s string) error {
 		m.GoqrSelectors = make(map[string]string)
 		m.GoqrAttrs = make(map[string]string)
 	}
-	matches := regexp.MustCompile("(.*?)=((.*?):)?(.*)").FindStringSubmatch(s)
+	matches := regexp.MustCompile("(.*?)=(([A-Z]*?):)?(.*)").FindStringSubmatch(s)
 	if len(matches) < 4 {
 		return errors.New("format error. To get help, run: " + progname)
 	}

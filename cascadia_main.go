@@ -164,24 +164,29 @@ func Cascadia(bi io.Reader, bw io.Writer, Opts OptsT) error {
 		// Process each item block
 		doc.Find(cssa[0]).Each(func(index int, item *goquery.Selection) {
 			//fmt.Printf("] #%d: %s\n", index, item.Text())
+			val := ""
 			for _, key := range piece.Keys {
 				//fmt.Printf("] %s: %s\n", key, piece.Values[key])
 				switch piece.PieceStyles[key] {
 				case PieceStyleRAW:
 					html.Render(bw, item.Find(piece.Values[key]).Get(0))
-					fmt.Fprintf(bw, "%s", deli)
 				case PieceStyleATTR:
-					fmt.Fprintf(bw, "%s%s",
-						item.AttrOr(piece.Values[key], ""), deli)
+					val = item.AttrOr(piece.Values[key], "")
 				case PieceStyleGOQR:
-					val := strings.TrimSpace(item.Find(piece.GoqrSelectors[key]).AttrOr(piece.GoqrAttrs[key], ""))
+					val = strings.TrimSpace(item.Find(piece.GoqrSelectors[key]).AttrOr(piece.GoqrAttrs[key], ""))
 					//fmt.Fprintf(os.Stderr, "] %s (%s:%s): '%+v'\n", key, piece.GoqrSelectors[key], piece.GoqrAttrs[key], val)
-					fmt.Fprintf(bw, "%s%s", val, deli)
 				case PieceStyleTEXT:
-					txt := strings.TrimSpace(item.Find(piece.Values[key]).Contents().Text())
-					//fmt.Fprintf(os.Stderr, "] %s: '%+v'\n", key, txt)
-					fmt.Fprintf(bw, "%s%s", txt, deli)
+					val = item.Find(piece.Values[key]).Contents().Text()
+					//fmt.Fprintf(os.Stderr, "] %s: '%+v'\n", key, val)
 				}
+				val = strings.TrimSpace(val)
+				// 1. Replace Windows-style line breaks with a literal "\n"
+				val = strings.ReplaceAll(val, "\r\n", "\\n")
+				// 2. Replace Unix-style line breaks
+				val = strings.ReplaceAll(val, "\n", "\\n")
+				// 3. Replace old Mac-style line breaks
+				val = strings.ReplaceAll(val, "\r", "\\n")
+				fmt.Fprintf(bw, "%s%s", val, deli)
 			}
 			fmt.Fprintf(bw, "\n")
 		})
