@@ -1,14 +1,7 @@
-project_name: cascadia
+version: 2
 
-archives:
-  - format: tar.gz
-    wrap_in_directory: true
-    format_overrides:
-      - goos: windows
-        format: zip
-    # remove README and LICENSE
-    files:
-      - none*
+# defaults to the name of the repository
+#project_name: cascadia
 
 builds:
   - env: [CGO_ENABLED=0]
@@ -19,13 +12,43 @@ builds:
     goarch:
       - amd64
       - arm64
+    # Strips debug information to keep binaries small
+    ldflags:
+      - -s -w 
 
 nfpms:
-- maintainer: Tong Sun <suntong@cpan.org>
-  description: CSS selector CLI tool
-  homepage: https://github.com/suntong/cascadia
-  license: MIT
-  formats:
-  - deb
-  - rpm
-  - apk
+  - #id: xx
+    # 3. Using variables for the Linux packaging
+    package_name: "{{ .ProjectName }}"
+    description: CSS selector CLI tool
+    file_name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}"
+    homepage: https://github.com/suntong/{{ .ProjectName }}
+    maintainer: Tong Sun <suntong@cpan.org>
+    license: MIT
+    formats:
+      - apk
+      - deb
+      - rpm
+
+archives:
+  - formats:
+      - tar.gz
+    # 2. Reverted back to using variables
+    #name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format_overrides:
+      - goos: windows
+        formats:
+          - zip
+    # remove README and LICENSE
+    files:
+      - none*
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-snapshot"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"

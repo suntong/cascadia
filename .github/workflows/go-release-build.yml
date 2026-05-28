@@ -7,6 +7,7 @@ on:
     tags:
       - 'v*'
   pull_request:
+  workflow_dispatch:
 
 jobs:
   build:
@@ -21,20 +22,20 @@ jobs:
         name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: 1.24
+          go-version: 1.25.0
+          # Enables automatic caching for Go modules and build artifacts
+          cache: true
+          # Optional: Points to the directory containing your go.mod if not in the root
+          # cache-dependency-path: subdir/go.sum
 
       -
-        name: Cache Go modules
-        uses: actions/cache@v4
-        # Do before go get
-        with:
-          path: ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
+        name: Go environment check
+        run: |
+          go env GOCACHE
+          go env GOMODCACHE
 
       -
-        name: Tests
+        name: Build & Tests
         run: |
           go mod tidy
           go build -v -trimpath
@@ -42,7 +43,7 @@ jobs:
 
       -
         name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v5
+        uses: goreleaser/goreleaser-action@v7
         if: success() && startsWith(github.ref, 'refs/tags/')
         with:
           version: latest
@@ -52,12 +53,12 @@ jobs:
 
       -
         name: Install Cloudsmith CLI
-        run: pip install --upgrade cloudsmith-cli
         if: success() && startsWith(github.ref, 'refs/tags/')
-        # Cloudsmith CLI tooling for pushing releases
-        # See https://help.cloudsmith.io/docs/cli
+        uses: cloudsmith-io/cloudsmith-cli-action@v2
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          cli-version: 'latest'
 
-      # Publish to cloudsmith repo
       -
         name: Publish package to cloudsmith
         if: success() && startsWith(github.ref, 'refs/tags/')
